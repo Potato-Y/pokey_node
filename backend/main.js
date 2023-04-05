@@ -1,15 +1,21 @@
-const Http = require('http');
+const http = require('http');
 const Server = require('socket.io').Server;
-const Express = require('express');
+const express = require('express');
+const connectDB = require('./src/db/dbController');
 
-const app = Express();
+connectDB();
 
-const httpServer = Http.createServer(app);
+const app = express();
+
+const httpServer = http.createServer(app);
 const io = new Server(httpServer, {
   cors: {
     origin: 'http://localhost:8080',
   },
 });
+
+app.use(express.json({ extended: false }));
+app.use('/api/register', require('./src/routes/api/registre'));
 
 io.on('connection', (socket) => {
   console.log('new user connection!');
