@@ -94,4 +94,25 @@ router.post('/login', async (req, res) => {
   });
 });
 
+router.post('/token_state', (req, res) => {
+  const { token } = req.body;
+  User.findByToken(token, (err, user) => {
+    if (err) {
+      return res.status(400).json({
+        errors: [
+          {
+            message: 'Token expiration',
+          },
+        ],
+      });
+    }
+
+    res.status(200).json({
+      email: user.email,
+      name: user.name,
+      isAuth: true,
+    });
+  });
+});
+
 module.exports = router;
