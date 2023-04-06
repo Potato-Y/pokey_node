@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const { authMiddleware } = require('../../../middlewares/auth-middleware');
 
-const User = require('../../../models/User');
+const { User } = require('../../../models/User');
 
-router.post('/registre', async (req, res) => {
+router.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
@@ -59,8 +59,9 @@ router.post('/login', async (req, res) => {
     });
   }
 
-  bcrypt.compare(password, user.password, async (err, isMatch) => {
-    if (err) {
+  user.comparePassword(password, (err, isMatch) => {
+    if (!isMatch) {
+      console.log(err);
       return res.status(400).json({
         errors: [
           {
@@ -70,49 +71,31 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    // 비밀번호가 같지 않음
-    if (!isMatch) {
-      return res.status(400).json({
-        errors: [
-          {
-            message: 'Not password',
-          },
-        ],
+    user.generateToken((err, user) => {
+      if (err) {
+        return res.status(400).json({
+          errors: [
+            {
+              message: 'Not password',
+            },
+          ],
+        });
+      }
+      return res.json({
+        success: true,
+        token: user.token,
+        userId: user._id,
       });
-    }
-
-    // 비밀번호가 같을 경우 Token 생성
-    const token = jwt.sign(user._id.toHexString(), 'createToken');
-
-    user.token = token;
-    await user.save();
-    res.json({
-      success: true,
-      token: token,
-      userId: user._id,
     });
   });
 });
 
-router.post('/token_state', (req, res) => {
-  const { token } = req.body;
-  User.findByToken(token, (err, user) => {
-    if (err) {
-      console.error(err);
-      return res.status(400).json({
-        errors: [
-          {
-            message: 'Token expiration',
-          },
-        ],
-      });
-    }
-
-    res.status(200).json({
-      email: user.email,
-      name: user.name,
-      isAuth: true,
-    });
+router.get('/token_state', authMiddleware, (req, res) => {
+  const user = req.user;
+  res.status(200).json({
+    email: user.email,
+    name: user.name,
+    isAuth: true,
   });
 });
 

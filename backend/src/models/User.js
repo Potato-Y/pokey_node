@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 // Schema 생성
 const UserSchema = new mongoose.Schema({
@@ -23,6 +24,25 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
+UserSchema.methods.comparePassword = function (plainPassword, callback) {
+  bcrypt.compare(plainPassword, this.password, (err, isMatch) => {
+    if (err) {
+      return callback(err);
+    }
+    callback(null, isMatch);
+  });
+};
+
+UserSchema.methods.generateToken = function (callback) {
+  var user = this;
+
+  const token = jwt.sign(user._id.toHexString(), 'createToken');
+
+  user.token = token;
+  user.save();
+  callback(null, user);
+};
+
 UserSchema.statics.findByToken = function (token, callback) {
   var user = this;
 
@@ -39,8 +59,6 @@ UserSchema.statics.findByToken = function (token, callback) {
   });
 };
 
-// UserSchema.statics.findOneAndUpdate=function(token,callback)
-
 const User = mongoose.model('user', UserSchema);
 
-module.exports = User;
+module.exports = { User };
