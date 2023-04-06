@@ -1,0 +1,97 @@
+const express = require('express');
+const router = express.Router();
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+const User = require('../../../models/User');
+
+router.post('/registre', async (req, res) => {
+  const { name, email, password } = req.body;
+
+  try {
+    // email을 통해 중복 확인
+    let user = await User.findOne({ email });
+    if (user) {
+      return res.status(400).json({
+        errors: [
+          {
+            errors: [
+              {
+                message: 'User already exists',
+              },
+            ],
+          },
+        ],
+      });
+    }
+
+    user = new User({
+      name,
+      email,
+      password,
+    });
+
+    // password 암호화
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
+
+    await user.save();
+
+    res.send('Success');
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  // DB에 이메일 요청
+  let user = await User.findOne({ email: email });
+  if (!user) {
+    return res.status(400).json({
+      errors: [
+        {
+          message: 'Not found user',
+        },
+      ],
+    });
+  }
+
+  bcrypt.compare(password, user.password, async (err, isMatch) => {
+    if (err) {
+      return res.status(400).json({
+        errors: [
+          {
+            message: 'Server Error.',
+          },
+        ],
+      });
+    }
+
+    // 비밀번호가 같지 않음
+    if (!isMatch) {
+      return res.status(400).json({
+        errors: [
+          {
+            message: 'Not password',
+          },
+        ],
+      });
+    }
+
+    // 비밀번호가 같을 경우 Token 생성
+    const token = jwt.sign(user._id.toHexString(), 'createToken');
+
+    user.token = token;
+    await user.save();
+    res.json({
+      result: 'Success',
+      token: token,
+      userId: user._id,
+    });
+  });
+});
+
+module.exports = router;

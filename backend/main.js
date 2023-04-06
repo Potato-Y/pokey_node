@@ -15,7 +15,7 @@ const io = new Server(httpServer, {
 });
 
 app.use(express.json({ extended: false }));
-app.use('/api/register', require('./src/routes/api/registre'));
+app.use('/api', require('./src/routes/api/apiRouter'));
 
 io.on('connection', (socket) => {
   console.log('new user connection!');
