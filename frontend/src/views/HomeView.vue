@@ -1,14 +1,19 @@
 <template>
-  <div class="home"></div>
+  <div class="home">
+    <UserBox />
+  </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import { socket } from "@/socket";
+import UserBox from "../components/UserBox.vue";
 
 export default {
   name: "HomeView",
-  components: {},
+  components: {
+    UserBox,
+  },
   mounted() {
     this.connect();
   },
