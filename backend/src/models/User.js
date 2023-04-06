@@ -23,7 +23,7 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-UserSchema.statics.findByToken = async function (token, callback) {
+UserSchema.statics.findByToken = function (token, callback) {
   var user = this;
 
   // token을 decode 한다.
@@ -38,6 +38,8 @@ UserSchema.statics.findByToken = async function (token, callback) {
     }
   });
 };
+
+// UserSchema.statics.findOneAndUpdate=function(token,callback)
 
 const User = mongoose.model('user', UserSchema);
 

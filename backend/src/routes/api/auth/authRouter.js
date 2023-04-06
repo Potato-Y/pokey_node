@@ -87,7 +87,7 @@ router.post('/login', async (req, res) => {
     user.token = token;
     await user.save();
     res.json({
-      result: 'Success',
+      success: true,
       token: token,
       userId: user._id,
     });
@@ -98,6 +98,7 @@ router.post('/token_state', (req, res) => {
   const { token } = req.body;
   User.findByToken(token, (err, user) => {
     if (err) {
+      console.error(err);
       return res.status(400).json({
         errors: [
           {
@@ -111,6 +112,41 @@ router.post('/token_state', (req, res) => {
       email: user.email,
       name: user.name,
       isAuth: true,
+    });
+  });
+});
+
+router.post('/logout', (req, res) => {
+  const { token } = req.body;
+  User.findByToken(token, async (err, user) => {
+    if (err) {
+      console.error(err);
+      return res.status(400).json({
+        errors: [
+          {
+            message: 'Token expiration',
+          },
+        ],
+      });
+    }
+
+    try {
+      await User.findByIdAndUpdate({ _id: user._id }, { token: '' });
+    } catch (err) {
+      console.error(err);
+      return res.status(400).json({
+        success: false,
+      });
+    }
+
+    if (user.token != '') {
+      console.error(err);
+      return res.status(400).json({
+        success: false,
+      });
+    }
+    res.status(200).json({
+      success: true,
     });
   });
 });
