@@ -6,7 +6,7 @@
 
 <script>
 // @ is an alias to /src
-import { socket } from "@/socket";
+// import { socket } from "@/socket";
 import UserBox from "../components/UserBox.vue";
 
 export default {
@@ -15,15 +15,15 @@ export default {
     UserBox,
   },
   mounted() {
-    this.connect();
+    // this.connect();
   },
   methods: {
-    connect() {
-      socket.connect();
-    },
-    disconnect() {
-      socket.disconnect();
-    },
+    // connect() {
+    //   socket.connect();
+    // },
+    // disconnect() {
+    //   socket.disconnect();
+    // },
   },
   data() {
     return {

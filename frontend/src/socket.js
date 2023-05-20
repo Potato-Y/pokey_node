@@ -14,20 +14,21 @@ const URL =
 
 export const socket = io(URL);
 
-socket.on("connect", () => {
-  console.log(process.env.SERVER_URL);
-  state.connected = true;
-  console.log("ok");
-});
+// socket.on("connect", () => {
+//   console.log(URL);
+//   state.connected = true;
+//   console.log("ok");
+// });
 
-socket.on("disconnect", () => {
-  state.connected = false;
-});
+// socket.on("disconnect", () => {
+//   state.connected = false;
+//   console.log("disconnect");
+// });
 
-socket.on("foo", (...args) => {
-  state.fooEvents.push(args);
-});
+// socket.on("foo", (...args) => {
+//   state.fooEvents.push(args);
+// });
 
-socket.on("bar", (...args) => {
-  state.barEvents.push(args);
-});
+// socket.on("bar", (...args) => {
+//   state.barEvents.push(args);
+// });

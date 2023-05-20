@@ -36,6 +36,7 @@ export default {
             type: true,
             token: res.data.token,
           });
+          this.$router.push("/room");
         })
         .catch(() => {
           alert("이메일 혹은 패스워드를 다시 확인하십시오.");
