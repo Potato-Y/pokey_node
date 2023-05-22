@@ -1,5 +1,8 @@
 <template>
   <div>
+    허용할 유저 이메일 <br />
+    <input type="text" v-model="authUserEmail" />
+    <button @click="sendAuthUser">저장</button>
     <div id="call">
       <div id="myStream">
         <video
@@ -32,6 +35,7 @@ export default {
   name: "ChatView",
   data() {
     return {
+      authUserEmail: "",
       roomName: "",
       myStream: null,
       muted: false,
@@ -46,7 +50,14 @@ export default {
     this.getRoomName();
     await this.getMedia();
     this.connect();
-    socket.emit("join_room", this.roomName);
+    socket.emit(
+      "join_room",
+      this.roomName,
+      this.$store.state.accessToken,
+      () => {
+        this.makeConnection();
+      }
+    );
 
     socket.on("welcome", async () => {
       const offer = await this.myPeerConnection.createOffer();
@@ -74,7 +85,20 @@ export default {
       this.myPeerConnection.addIceCandidate(ice);
     });
 
-    this.makeConnection();
+    socket.on("not_room_auth", () => {
+      alert("방에 접속할 수 없습니다.");
+      this.$router.push("/");
+    });
+
+    socket.on("not_auth", () => {
+      alert("로그인이 필요합니다.");
+      this.$router.push("/");
+    });
+
+    socket.on("disconnect", () => {
+      // alert("서버와 연결이 끊켰습니다.");
+      console.log("disconnect");
+    });
   },
   methods: {
     getRoomName() {
@@ -86,7 +110,9 @@ export default {
       /** 라우터 이동 시 데이터 새로고침을 중지 */
     },
     disconnect() {
-      this.myPeerConnection.close();
+      if (this.myPeerConnection !== null) {
+        this.myPeerConnection.close();
+      }
       this.myPeerConnection = null;
       if (this.myStream) {
         this.myStream.getAudioTracks().forEach((track) => track.stop());
@@ -176,6 +202,7 @@ export default {
     // },
     // RTC Code
     makeConnection() {
+      console.log("webRTC start");
       this.myPeerConnection = new RTCPeerConnection({
         iceServers: [
           {
@@ -203,6 +230,23 @@ export default {
       const peersStream = document.querySelector("#peerFace");
 
       peersStream.srcObject = data.stream;
+    },
+    /**
+     * 입장 가능한 유저의 정보를 서버에 전송한다.
+     */
+    sendAuthUser() {
+      socket.emit(
+        "setAuthUser",
+        this.authUserEmail,
+        this.roomName,
+        (result) => {
+          if (result === true) {
+            alert("등록되었습니다.");
+          } else {
+            alert("등록에 실패하였습니다.");
+          }
+        }
+      );
     },
   },
 };
