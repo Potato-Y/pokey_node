@@ -16,9 +16,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  token: {
-    type: String,
-  },
   tokenExp: {
     type: Number,
   },
@@ -36,7 +33,7 @@ UserSchema.methods.comparePassword = function (plainPassword, callback) {
 UserSchema.methods.generateToken = function (callback) {
   var user = this;
 
-  const token = jwt.sign(user._id.toHexString(), 'createToken');
+  const token = jwt.sign({'id':user._id.toHexString(),'name':user.name}, 'createToken');
 
   user.token = token;
   user.save();
@@ -51,7 +48,7 @@ UserSchema.statics.findByToken = function (token, callback) {
     // 유저 아이디를 이용해 유저를 찾은 다음
     // 클라이언트에서 가져온 token과 db에 보관된 토큰이 일치하는지 확인
     try {
-      user = await user.findOne({ _id: decoded, token: token });
+      user = await user.findOne({ _id: decoded.id});
       callback(err, user);
     } catch (err) {
       return callback(err);
