@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const { country } = require('./Country');
+const { language } = require('./Language');
 
 // Schema 생성
 const UserSchema = new mongoose.Schema({
@@ -15,6 +17,16 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+  },
+  country: {
+    type: String,
+    enum: country,
+    required: true,
+  },
+  language: {
+    type: String,
+    enum: language,
+    require: true,
   },
   tokenExp: {
     type: Number,
@@ -33,7 +45,7 @@ UserSchema.methods.comparePassword = function (plainPassword, callback) {
 UserSchema.methods.generateToken = function (callback) {
   var user = this;
 
-  const token = jwt.sign({'id':user._id.toHexString(),'name':user.name}, 'createToken');
+  const token = jwt.sign({ id: user._id.toHexString(), name: user.name }, 'createToken');
 
   user.token = token;
   user.save();
@@ -48,7 +60,7 @@ UserSchema.statics.findByToken = function (token, callback) {
     // 유저 아이디를 이용해 유저를 찾은 다음
     // 클라이언트에서 가져온 token과 db에 보관된 토큰이 일치하는지 확인
     try {
-      user = await user.findOne({ _id: decoded.id});
+      user = await user.findOne({ _id: decoded.id });
       callback(err, user);
     } catch (err) {
       return callback(err);

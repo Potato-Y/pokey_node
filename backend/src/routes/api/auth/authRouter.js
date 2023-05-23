@@ -6,7 +6,7 @@ const { authMiddleware } = require('../../../middlewares/auth-middleware');
 const { User } = require('../../../models/User');
 
 router.post('/register', async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, country, language } = req.body;
 
   try {
     // email을 통해 중복 확인
@@ -28,6 +28,8 @@ router.post('/register', async (req, res) => {
     user = new User({
       name,
       email,
+      country,
+      language,
       password,
     });
 
