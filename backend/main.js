@@ -72,6 +72,9 @@ io.on('connection', (socket) => {
       // 입장 가능한 사람인지 확인 후 아닌 경우 돌려보내기
       if (io.sockets.adapter.rooms.get(roomName).authUser.includes(user.email)) {
         done();
+      } else if (io.sockets.adapter.rooms.get(roomName).roomAdmin == user.email) {
+        // 방장인 경우 재입장이 가능하도록 추가
+        done();
       } else {
         socket.emit('not_room_auth');
         socket.disconnect();
