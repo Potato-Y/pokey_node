@@ -12,9 +12,25 @@
           width="400"
           height="400"
         ></video>
-        <button id="mute">Mute</button>
-        <button id="camera">Turn Camera Off</button>
-        <select id="cameras"></select>
+        <button id="mute" @click="handleMuteClick">
+          {{ muted ? "Unmute" : "Mute" }}
+        </button>
+        <button id="camera" @click="handleCameraClick">
+          {{ cameraOff ? "Turn Camera On" : "Turn Camera Off" }}
+        </button>
+        <select
+          id="cameras"
+          v-model="camerasSelect"
+          @change="handleCameraChange"
+        >
+          <option
+            v-for="(item, index) in camerasList"
+            :key="index"
+            :value="item.value"
+          >
+            {{ item.name }}
+          </option>
+        </select>
       </div>
       <video
         id="peerFace"
@@ -41,6 +57,8 @@ export default {
       muted: false,
       cameraOff: false,
       myPeerConnection: null,
+      camerasSelect: null,
+      camerasList: [],
     };
   },
   beforeUnmount() {
@@ -131,13 +149,10 @@ export default {
         const currentCamera = this.myStream.getVideoTracks()[0];
 
         cameras.forEach((camera) => {
-          const option = document.createElement("option");
-          option.value = camera.deviceId;
-          option.innerText = camera.label;
-          if (currentCamera.label === camera.label) {
-            option.selected = true;
+          this.camerasList.push({ name: camera.label, value: camera.deviceId });
+          if (currentCamera.label == camera.label) {
+            this.camerasSelect = camera.label;
           }
-          this.camerasSelect.appendChild(option);
         });
       } catch (e) {
         console.log(e);
@@ -153,9 +168,11 @@ export default {
         video: { deviceId: { exact: deviceId } },
       };
       try {
-        this.myStream = await navigator.mediaDevices.getUserMedia(
-          deviceId ? cameraConstraints : initialConstrains
-        );
+        this.myStream = await navigator.mediaDevices
+          .getUserMedia(deviceId ? cameraConstraints : initialConstrains)
+          .catch((err) => {
+            console.log(err);
+          });
         const myFace = document.querySelector("#myFace");
         myFace.srcObject = this.myStream;
         if (!deviceId) {
@@ -171,10 +188,10 @@ export default {
         .getAudioTracks()
         .forEach((track) => (track.enabled = !track.enabled));
       if (!this.muted) {
-        this.muteBtn.innerText = "Unmute";
+        // this.muteBtn.innerText = "Unmute";
         this.muted = true;
       } else {
-        this.muteBtn.innerText = "Mute";
+        // this.muteBtn.innerText = "Mute";
         this.muted = false;
       }
     },
@@ -183,23 +200,23 @@ export default {
         .getVideoTracks()
         .forEach((track) => (track.enabled = !track.enabled));
       if (this.cameraOff) {
-        this.cameraBtn.innerText = "Turn Camera Off";
+        // this.cameraBtn.innerText = "Turn Camera Off";
         this.cameraOff = false;
       } else {
-        this.cameraBtn.innerText = "Turn Camera On";
+        // this.cameraBtn.innerText = "Turn Camera On";
         this.cameraOff = true;
       }
     },
-    // async handleCameraChange() {
-    //   await this.getMedia(camerasSelect.value);
-    //   if (this.myPeerConnection) {
-    //     const videoTrack = myStream.getVideoTracks()[0];
-    //     const videoSender = myPeerConnection
-    //       .getSenders()
-    //       .find((sender) => sender.track.kind === "video");
-    //     videoSender.replaceTrack(videoTrack);
-    //   }
-    // },
+    async handleCameraChange(event) {
+      await this.getMedia(event.target.value);
+      if (this.myPeerConnection) {
+        const videoTrack = this.myStream.getVideoTracks()[0];
+        const videoSender = this.myPeerConnection
+          .getSenders()
+          .find((sender) => sender.track.kind === "video");
+        videoSender.replaceTrack(videoTrack);
+      }
+    },
     // RTC Code
     makeConnection() {
       console.log("webRTC start");
