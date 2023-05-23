@@ -101,6 +101,74 @@ router.get('/token_state', authMiddleware, (req, res) => {
   });
 });
 
+router.post('/token_state', authMiddleware, (req, res) => {
+  const user = req.user;
+  res.status(200).json({
+    email: user.email,
+    name: user.name,
+    isAuth: true,
+  });
+});
+
+/**
+ * 회원 정보 수정.
+ * 회원 정보는 국가와 사용 언어를 변경할 수 있다.
+ */
+router.post('/changing_information', authMiddleware, (req, res) => {
+  const user = req.user;
+  const changeInfo = req.body.info;
+
+  User.findOne({ _id: user._id.toString() })
+    .then((userDoc) => {
+      userDoc.country = changeInfo.country;
+      userDoc.language = changeInfo.language;
+      return userDoc.save();
+    })
+    .then((result) => {
+      // console.log('@@result : ', result);
+      return res.status(200).json({
+        success: true,
+      });
+    })
+    .catch((err) => {
+      console.log('@@err : ', err);
+      return res.status(400).json({
+        success: false,
+      });
+    });
+});
+
+/**
+ * 회원 정보 수정.
+ * Password를 변경할 수 있다.
+ */
+router.post('/changing_password', authMiddleware, async (req, res) => {
+  const user = req.user;
+  const changeInfo = req.body.info;
+
+  // password 암호화
+  const salt = await bcrypt.genSalt(10);
+  const password = await bcrypt.hash(changeInfo.password, salt);
+
+  User.findOne({ _id: user._id.toString() })
+    .then((userDoc) => {
+      userDoc.password = password;
+      return userDoc.save();
+    })
+    .then((result) => {
+      // console.log('@@result : ', result);
+      return res.status(200).json({
+        success: true,
+      });
+    })
+    .catch((err) => {
+      console.log('@@err : ', err);
+      return res.status(400).json({
+        success: false,
+      });
+    });
+});
+
 router.post('/logout', (req, res) => {
   const { token } = req.body;
   User.findByToken(token, async (err, user) => {

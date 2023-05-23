@@ -54,7 +54,6 @@ io.on('connection', (socket) => {
     // socket에서 유저 이름 가져오기
     // console.log(socket.user.name);
 
-    // private room(개인-개인 연결)에 접근하지 못 하도록 수정
     socket.join(roomName);
     console.log(`new user join! user: ${socket.user.name} room name: ${roomName}`);
 
@@ -62,7 +61,7 @@ io.on('connection', (socket) => {
 
     // 새로 만든 방이면 방장 정보를 등록
     if (!io.sockets.adapter.rooms.get(roomName).roomAdmin) {
-      console.log('정보 없음');
+      console.log(`${roomName}은 새로 만들어진 방입니다.`);
       io.sockets.adapter.rooms.get(roomName).roomAdmin = user.email;
 
       // 필수 내용도 등록 (접속 가능한 유저 )

@@ -1,7 +1,11 @@
 const { User } = require('../models/User');
 
 const authMiddleware = (req, res, next) => {
-  const { token } = req.query;
+  // get 방식, post 방식에 따라 token 불러오기
+  var { token } = req.query;
+  if (token === undefined) {
+    token = req.body.token;
+  }
 
   // 토큰을 복호화 한 뒤에, 일치하는 유저 찾기
   User.findByToken(token, (err, user) => {
