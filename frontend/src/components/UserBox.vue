@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ this.$store.state.isLogin }}
     <form>
       <input type="text" placeholder="Email" v-model="email" />
       <input type="password" placeholder="PW" v-model="password" />
@@ -35,7 +36,12 @@ export default {
           this.$store.commit("changeLogin", {
             type: true,
             token: res.data.token,
+            email: res.data.email,
+            name: res.data.name,
+            country: res.data.country,
+            language: res.data.language,
           });
+          window.localStorage.setItem("token", res.data.token);
           this.$router.push("/room");
         })
         .catch(() => {

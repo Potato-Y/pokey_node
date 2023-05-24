@@ -97,6 +97,8 @@ router.get('/token_state', authMiddleware, (req, res) => {
   res.status(200).json({
     email: user.email,
     name: user.name,
+    country: user.country,
+    language: user.language,
     isAuth: true,
   });
 });
@@ -106,6 +108,8 @@ router.post('/token_state', authMiddleware, (req, res) => {
   res.status(200).json({
     email: user.email,
     name: user.name,
+    country: user.country,
+    language: user.language,
     isAuth: true,
   });
 });
@@ -120,6 +124,7 @@ router.post('/changing_information', authMiddleware, (req, res) => {
 
   User.findOne({ _id: user._id.toString() })
     .then((userDoc) => {
+      userDoc.name = changeInfo.name;
       userDoc.country = changeInfo.country;
       userDoc.language = changeInfo.language;
       return userDoc.save();

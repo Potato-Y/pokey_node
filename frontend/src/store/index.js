@@ -4,6 +4,10 @@ export default createStore({
   state: {
     isLogin: false,
     accessToken: "",
+    name: "",
+    email: "",
+    country: "",
+    language: "",
   },
   getters: {
     getIsLogin: (state) => {
@@ -20,18 +24,24 @@ export default createStore({
      * @param {String} token accessToken
      */
     changeLogin: (state, args) => {
-      const { type, token } = args;
+      const { type, token, email, language, country } = args;
 
       if (!type) {
         // 로그아웃 실행
         state.isLogin = false;
         state.accessToken = "";
+        state.email = "";
+        state.language = "";
+        state.country = "";
 
         console.log("Logout");
       } else {
         // 로그인 정보 추가
         state.isLogin = true;
         state.accessToken = token;
+        state.email = email;
+        state.language = language;
+        state.country = country;
 
         console.log("Login");
         console.log("Token", state.accessToken);
