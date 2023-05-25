@@ -107,26 +107,9 @@ io.on('connection', (socket) => {
   socket.on('answer', (targetId, answer) => {
     socket.to(targetId).emit('answer', { socketId: socket.id, name: socket.user.name }, answer);
   });
-  let ice;
-  socket.on('ice', (roomName, inIce) => {
-    ice = inIce;
-    io.sockets.adapter.rooms.get(roomName).forEach((socketId) => {
-      if (socketId) {
-console.log(ice);
-        socket.to(socketId).emit('ice', { socketId: socket.id, name: socket.user.name }, ice);
-      }
-    });
+  socket.on('ice', (targetId, ice) => {
+    socket.to(targetId).emit('ice', { socketId: socket.id, name: socket.user.name }, ice);
   });
-
-  // socket.on('offer', (offer, roomName) => {
-  //   socket.to(roomName).emit('offer', offer);
-  // });
-  // socket.on('answer', (answer, roomName) => {
-  //   socket.to(roomName).emit('answer', answer);
-  // });
-  // socket.on('ice', (ice, roomName) => {
-  //   socket.to(roomName).emit('ice', ice);
-  // });
 
   // 방에 접속 가능한 유저를 등록한다. 해당 기능은 방장만 사용 가능하다.
   socket.on('setAuthUser', (userEmail, roomName, done) => {

@@ -32,13 +32,7 @@
           </option>
         </select>
       </div>
-      <!-- <video
-        id="peerFace"
-        autoplay
-        playsinline
-        width="400"
-        height="400"
-      ></video> -->
+      <!-- 상대 화면 추가 -->
       <div>
         <peer-video
           :id="'peerFace-' + index"
@@ -46,6 +40,9 @@
           :key="index"
           :stream="item.stream"
         ></peer-video>
+        <div v-for="(item, index) in dummy" :key="index">
+          <div></div>
+        </div>
       </div>
     </div>
     <button @click="disconnect">disconnect</button>
@@ -77,6 +74,10 @@ export default {
       peerConnections: [],
       camerasSelect: null,
       camerasList: [],
+      /**
+       * 상태 변경을 위해 더미 변수 추가
+       */
+      dummy: [0],
     };
   },
   beforeUnmount() {
@@ -90,9 +91,7 @@ export default {
       "join_room",
       this.roomName,
       this.$store.state.accessToken,
-      () => {
-        // this.makeConnection();
-      }
+      () => {}
     );
 
     // 방에 새로운 사람이 입장할 시 발생하는 이벤트
@@ -115,6 +114,19 @@ export default {
         },
         (data) => {
           obj.stream = data.stream;
+          this.dummy[0]++;
+        },
+        (event) => {
+          const state = event.target;
+          if (
+            state.iceConnectionState === "disconnected" ||
+            state.iceConnectionState === "closed"
+          ) {
+            // 상대 피어의 연결이 닫힌 경우 실행
+            this.peerConnections = this.peerConnections.filter((item) => {
+              return item.socketId !== info.socketId;
+            });
+          }
         }
       );
 
@@ -127,13 +139,6 @@ export default {
       socket.emit("offer", info.socketId, offer);
       return;
     });
-
-    // socket.on("welcome", async () => {
-    //   const offer = await this.myPeerConnection.createOffer();
-    //   this.myPeerConnection.setLocalDescription(offer);
-    //   console.log("sent the offer");
-    //   socket.emit("offer", offer, this.roomName);
-    // });
 
     // 기존 입장한 유저가 보낸 offer를 받고 답장을 보냄.
     // 서버에서 전송된 데이터 ({ socketId: socket.id, name: socket.user.name }, offer)
@@ -153,6 +158,7 @@ export default {
         },
         (data) => {
           obj.stream = data.stream;
+          this.dummy[0]++;
         }
       );
 
@@ -165,15 +171,6 @@ export default {
       console.log("sent the answer");
       socket.emit("answer", info.socketId, answer);
     });
-
-    // socket.on("offer", async (offer) => {
-    //   console.log("received the offer");
-    //   this.myPeerConnection.setRemoteDescription(offer);
-    //   const answer = await this.myPeerConnection.createAnswer();
-    //   this.myPeerConnection.setLocalDescription(answer);
-    //   socket.emit("answer", answer, this.roomName);
-    //   console.log("sent the answer");
-    // });
 
     // ({ socketId: socket.id, name: socket.user.name }, answer)
     socket.on("answer", async (info, answer) => {
@@ -195,21 +192,7 @@ export default {
       });
 
       await obj.peerConnection.addIceCandidate(ice);
-
-      // if (obj.peerConnection.remoteDescription && ice) {
-      //   await obj.peerConnection.addIceCandidate(ice);
-      // }
     });
-
-    // socket.on("answer", (answer) => {
-    //   console.log("received the answer");
-    //   this.myPeerConnection.setRemoteDescription(answer);
-    // });
-
-    // socket.on("ice", (ice) => {
-    //   console.log("received candidate");
-    //   this.myPeerConnection.addIceCandidate(ice);
-    // });
 
     socket.on("not_room_auth", () => {
       alert("방에 접속할 수 없습니다.");
@@ -225,6 +208,13 @@ export default {
       // alert("서버와 연결이 끊켰습니다.");
       console.log("disconnect");
     });
+
+    socket.on("user_disconnect", (info) => {
+      console.log(info.name + "님이 방을 나가셨습니다.");
+      this.peerConnections = this.peerConnections.filter((item) => {
+        return item.socketId != info.socketId;
+      });
+    });
   },
   methods: {
     getRoomName() {
@@ -235,11 +225,13 @@ export default {
       socket.connect();
       /** 라우터 이동 시 데이터 새로고침을 중지 */
     },
+    // 내가 나갈 때 실행
     disconnect() {
-      if (this.myPeerConnection !== null) {
-        this.myPeerConnection.close();
-      }
-      this.myPeerConnection = null;
+      this.peerConnections.forEach((item) => {
+        item.peerConnection.close();
+      });
+      this.peerConnections = [];
+
       if (this.myStream) {
         this.myStream.getAudioTracks().forEach((track) => track.stop());
         this.myStream.getVideoTracks().forEach((track) => track.stop());
@@ -296,10 +288,8 @@ export default {
         .getAudioTracks()
         .forEach((track) => (track.enabled = !track.enabled));
       if (!this.muted) {
-        // this.muteBtn.innerText = "Unmute";
         this.muted = true;
       } else {
-        // this.muteBtn.innerText = "Mute";
         this.muted = false;
       }
     },
@@ -308,10 +298,8 @@ export default {
         .getVideoTracks()
         .forEach((track) => (track.enabled = !track.enabled));
       if (this.cameraOff) {
-        // this.cameraBtn.innerText = "Turn Camera Off";
         this.cameraOff = false;
       } else {
-        // this.cameraBtn.innerText = "Turn Camera On";
         this.cameraOff = true;
       }
     },
@@ -326,7 +314,12 @@ export default {
       }
     },
     // RTC Code
-    makeConnection(obj, handleIce, handleAddStream) {
+    makeConnection(
+      obj,
+      handleIce,
+      handleAddStream,
+      handleConnectionStateChange
+    ) {
       console.log("webRTC start");
       obj.peerConnection = new RTCPeerConnection({
         iceServers: [
@@ -343,20 +336,16 @@ export default {
       });
       obj.peerConnection.addEventListener("icecandidate", handleIce);
       obj.peerConnection.addEventListener("addstream", handleAddStream);
+      obj.peerConnection.addEventListener(
+        "iceconnectionstatechange",
+        handleConnectionStateChange
+      ); // Add event listener for ice connection state change
+
       this.myStream.getTracks().forEach((track) => {
         obj.peerConnection.addTrack(track, this.myStream);
       });
     },
-    handleIce(data) {
-      console.log("sent candidate");
-      socket.emit("ice", this.roomName, data.candidate);
-    },
-    handleAddStream(data) {
-      // const peersStream = document.querySelector("#peerFace");
 
-      // peersStream.srcObject = data.stream;
-      this.peerStream = data.stream;
-    },
     /**
      * 입장 가능한 유저의 정보를 서버에 전송한다.
      */

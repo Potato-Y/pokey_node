@@ -1,5 +1,4 @@
 <template>
-  tt
   <video
     ref="videoTag"
     :id="id"
