@@ -6,6 +6,7 @@ const connectDB = require('./src/db/dbController');
 const path = require('path');
 const cors = require('cors');
 const { socketAuthMiddleware } = require('./src/middlewares/auth-middleware');
+// const { Translate } = require('@google-cloud/translate').v2; //api 사용을 위해 모듈 가져오기
 
 connectDB();
 
@@ -33,6 +34,16 @@ var indexRouter = require('./src/routes/index');
 
 app.use('/', indexRouter);
 app.use('*', indexRouter);
+
+// const translate = new Translate({
+//   keyFilename: path.join(__dirname, './google_cloud_key.json'), // 인증 정보 파일의 경로를 옵션으로 설정합니다.
+// });
+
+const translateText = async (text, targetLanguage) => {
+  //translate.translate사용하여 메시지 변역 결과 반환
+  const [translation] = await translate.translate(String(text), targetLanguage);
+  return translation;
+};
 
 io.on('connection', (socket) => {
   console.log('new user connection!');
@@ -125,6 +136,68 @@ io.on('connection', (socket) => {
       done(false);
     }
   });
+
+  socket.on('trans', (roomName, text) => {
+    /**
+     * 번역한 데이터들을
+     */
+    var data = [];
+    console.log(socket.id+'가 번역을 요청 함: ' + text);
+
+    io.sockets.adapter.rooms.get(roomName).forEach(async (socketId) => {
+      if (socketId) {
+        // 본인인 경우 종료
+        if (socket.id == socketId) {
+          // return;
+        }
+
+        let socketInfo = io.sockets.sockets.get(socketId);
+        if (socketInfo) {
+          // socket 정보가 있을 경우 실행
+          /**
+           * 유저 개인 정보
+           */
+          let user = socketInfo.user;
+          let language = user.language;
+
+          // 만약 이미 해당 언어에 대한 번역한 내용이 있는 경우 바로 전송
+          let searchTranslationData = data
+            .filter(function (obj) {
+              return obj.language === user.language;
+            })
+            .map(function (obj) {
+              if (obj) {
+                return obj.translation;
+              }
+            });
+
+          // 만약 데이터가 있으면 이미 번역한 내용을 전송
+          if (searchTranslationData[0]) {
+            console.log(socketId + ' 전송을 함. 미리 번역됨:' + searchTranslationData[0]);
+
+            return socket.to(socketId).emit('trans_return', { socketId: socket.id, name: socket.user.name }, searchTranslationData[0]); // 번역 끄고 테스트 하는 용
+          }
+
+          if (!searchTranslationData[0]) {
+            // const translation = await translateText(text, language); // 번역할 언어 설정
+            // 원본 유저의 정보, 번역된 정보를 전송
+            // data.push({ language: language, translation: translation });
+            data.push({ language: language, translation: text }); // 테스트용
+          }
+
+          // 만약 data에 있는 내용이면 그걸 보내주는 코드가 필요함.
+
+          // console.log(socketId + ' 전송을 함. 번역 내용:' + translation);
+          console.log(socketId + ' 전송을 함. 번역 내용:' + text); // 번역 끄고 테스트 하는 용
+
+          // 번역 요청 한 사람의 정보, 번역 내용
+          // socket.to(socketId).emit('trans_return', { socketId: socket.id, name: socket.user.name }, translation);
+          socket.to(socketId).emit('trans_return', { socketId: socket.id, name: socket.user.name }, text); // 번역 끄고 테스트 하는 용
+        }
+      }
+    });
+  });
+
   socket.on('disconnect', () => {
     try {
       console.log(`user '${socket.user.name}' disconnect`);

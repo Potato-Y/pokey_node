@@ -78,6 +78,7 @@ export default {
        * 상태 변경을 위해 더미 변수 추가
        */
       dummy: [0],
+      recognition: null,
     };
   },
   beforeUnmount() {
@@ -91,7 +92,9 @@ export default {
       "join_room",
       this.roomName,
       this.$store.state.accessToken,
-      () => {}
+      () => {
+        this.setStt();
+      }
     );
 
     // 방에 새로운 사람이 입장할 시 발생하는 이벤트
@@ -194,6 +197,11 @@ export default {
       await obj.peerConnection.addIceCandidate(ice);
     });
 
+    // { socketId: socket.id, name: socket.user.name }, translation
+    socket.on("trans_return", (info, translation) => {
+      console.log(`${info.name}: ${translation}`);
+    });
+
     socket.on("not_room_auth", () => {
       alert("방에 접속할 수 없습니다.");
       this.$router.push("/");
@@ -289,8 +297,10 @@ export default {
         .forEach((track) => (track.enabled = !track.enabled));
       if (!this.muted) {
         this.muted = true;
+        this.recognition.stop();
       } else {
         this.muted = false;
+        this.recognition.start();
       }
     },
     handleCameraClick() {
@@ -305,13 +315,14 @@ export default {
     },
     async handleCameraChange(event) {
       await this.getMedia(event.target.value);
-      if (this.myPeerConnection) {
+
+      this.peerConnections.forEach((item) => {
         const videoTrack = this.myStream.getVideoTracks()[0];
-        const videoSender = this.myPeerConnection
+        const videoSender = item.peerConnection
           .getSenders()
           .find((sender) => sender.track.kind === "video");
         videoSender.replaceTrack(videoTrack);
-      }
+      });
     },
     // RTC Code
     makeConnection(
@@ -362,6 +373,44 @@ export default {
           }
         }
       );
+    },
+
+    /**
+     * 음성 인식을 설정
+     */
+    setStt() {
+      // eslint-disable-next-line no-undef
+      this.recognition = new webkitSpeechRecognition();
+      var language = this.$store.state.language;
+      var country = this.$store.state.country;
+
+      console.log(`적용 언어: ${language}-${country}`);
+      this.recognition.lang = `${language}-${country}`;
+
+      this.recognition.onresult = (event) => {
+        const speechResult = event.results[0][0].transcript;
+        console.log(`인식 결과 ${speechResult}`);
+
+        // 음소거 중이면 전송하지 않도록
+        if (!this.muted) {
+          socket.emit("trans", this.roomName, speechResult);
+        }
+      };
+
+      // this.recognition.onerror = (event) => {
+      //   console.log(event.error);
+      // };
+
+      this.recognition.onend = () => {
+        // console.log("다음 말을 인식합니다.");
+        if (this.muted) {
+          this.recognition.stop();
+        } else {
+          this.recognition.start();
+        }
+      };
+
+      this.recognition.start();
     },
   },
 };
