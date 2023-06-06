@@ -87,6 +87,7 @@ router.post('/login', async (req, res) => {
         success: true,
         token: user.token,
         name: user.name,
+        email: user.email,
         country: user.country,
         language: user.language,
       });
