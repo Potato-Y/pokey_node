@@ -142,13 +142,16 @@ io.on('connection', (socket) => {
      * 번역한 데이터들을
      */
     var data = [];
-    console.log(socket.id+'가 번역을 요청 함: ' + text);
+    const date = new Date();
+    console.log(date + socket.id + '가 번역을 요청 함: ' + text);
 
     io.sockets.adapter.rooms.get(roomName).forEach(async (socketId) => {
       if (socketId) {
         // 본인인 경우 종료
         if (socket.id == socketId) {
-          // return;
+          // console.log('[' + socketId + '] 전송을 함. 자신이 말한 내용 : ' + text);
+          // return socket.to(socketId).emit('trans_me', date, text);
+          return;
         }
 
         let socketInfo = io.sockets.sockets.get(socketId);
@@ -173,9 +176,9 @@ io.on('connection', (socket) => {
 
           // 만약 데이터가 있으면 이미 번역한 내용을 전송
           if (searchTranslationData[0]) {
-            console.log(socketId + ' 전송을 함. 미리 번역됨:' + searchTranslationData[0]);
+            console.log('[' + socketId + '] 전송을 함. 미리 번역됨:' + searchTranslationData[0]);
 
-            return socket.to(socketId).emit('trans_return', { socketId: socket.id, name: socket.user.name }, searchTranslationData[0]); // 번역 끄고 테스트 하는 용
+            return socket.to(socketId).emit('trans_return', { socketId: socket.id, name: socket.user.name }, date, searchTranslationData[0]); // 번역 끄고 테스트 하는 용
           }
 
           if (!searchTranslationData[0]) {
@@ -191,8 +194,8 @@ io.on('connection', (socket) => {
           console.log(socketId + ' 전송을 함. 번역 내용:' + text); // 번역 끄고 테스트 하는 용
 
           // 번역 요청 한 사람의 정보, 번역 내용
-          // socket.to(socketId).emit('trans_return', { socketId: socket.id, name: socket.user.name }, translation);
-          socket.to(socketId).emit('trans_return', { socketId: socket.id, name: socket.user.name }, text); // 번역 끄고 테스트 하는 용
+          // socket.to(socketId).emit('trans_return', { socketId: socket.id, name: socket.user.name },date, translation);
+          socket.to(socketId).emit('trans_return', { socketId: socket.id, name: socket.user.name }, date, text); // 번역 끄고 테스트 하는 용
         }
       }
     });

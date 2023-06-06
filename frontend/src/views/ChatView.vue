@@ -45,6 +45,7 @@
         </div>
       </div>
     </div>
+    <button @click="download">지금까지의 대화 내용 다운로드</button>
     <button @click="disconnect">disconnect</button>
   </div>
 </template>
@@ -52,6 +53,7 @@
 <script>
 import { socket } from "@/socket";
 import PeerVideo from "@/components/PeerVideo.vue";
+import txtDownload from "@/util/txtToProceedings.js";
 
 export default {
   name: "ChatView",
@@ -79,6 +81,7 @@ export default {
        */
       dummy: [0],
       recognition: null,
+      txt: [],
     };
   },
   beforeUnmount() {
@@ -198,9 +201,23 @@ export default {
     });
 
     // { socketId: socket.id, name: socket.user.name }, translation
-    socket.on("trans_return", (info, translation) => {
-      console.log(`${info.name}: ${translation}`);
+    socket.on("trans_return", (info, date, translation) => {
+      // var language = this.$store.state.language;
+      // var country = this.$store.state.country;
+
+      this.txt.push({
+        date: date,
+        name: info.name,
+        translation: translation,
+      });
+      // console.log(`[${getDate}] ${info.name}: ${translation}`);
     });
+
+    // socket.on("trans_me", (date, text) => {
+    // console.log("!!!trans me!!!!");
+    // var language = this.$store.state.language;
+    // var country = this.$store.state.country;
+    // });
 
     socket.on("not_room_auth", () => {
       alert("방에 접속할 수 없습니다.");
@@ -393,6 +410,15 @@ export default {
 
         // 음소거 중이면 전송하지 않도록
         if (!this.muted) {
+          const name = this.$store.state.name;
+
+          const date = new Date();
+
+          this.txt.push({
+            date: date,
+            name: name,
+            translation: speechResult,
+          });
           socket.emit("trans", this.roomName, speechResult);
         }
       };
@@ -411,6 +437,9 @@ export default {
       };
 
       this.recognition.start();
+    },
+    download() {
+      txtDownload(this.roomName, this.txt);
     },
   },
 };

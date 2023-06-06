@@ -24,13 +24,14 @@ export default createStore({
      * @param {String} token accessToken
      */
     changeLogin: (state, args) => {
-      const { type, token, email, language, country } = args;
+      const { type, token, email, name, language, country } = args;
 
       if (!type) {
         // 로그아웃 실행
         state.isLogin = false;
         state.accessToken = "";
         state.email = "";
+        state.name = "";
         state.language = "";
         state.country = "";
 
@@ -40,6 +41,7 @@ export default createStore({
         state.isLogin = true;
         state.accessToken = token;
         state.email = email;
+        state.name = name;
         state.language = language;
         state.country = country;
 
