@@ -15,7 +15,7 @@
         <a href="#section1" class="loginbtn"> HOME </a>
         <a href="#section2" class="loginbtn"> ABOUT </a>
         <a href="#section3" class="loginbtn"> CONTACT </a>
-        <a href="#section3" class="loginbtn"> SIGN UP </a>
+        <router-link to="/signup" class="loginbtn">SIGN UP</router-link>
 
         <div id="menuArea">
           <input type="checkbox" id="menuToggle" />
