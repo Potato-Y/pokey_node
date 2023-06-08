@@ -49,6 +49,13 @@ export default createStore({
         console.log("Token", state.accessToken);
       }
     },
+    changeInfo: (state, args) => {
+      const { name, language, country } = args;
+
+      state.name = name;
+      state.language = language;
+      state.country = country;
+    },
   },
   actions: {},
   modules: {},

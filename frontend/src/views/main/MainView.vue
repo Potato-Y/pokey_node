@@ -92,7 +92,9 @@
                     <h1 class="info-h1">{{ this.$store.state.name }}</h1>
                     <h2 class="info-h2">{{ this.$store.state.email }}</h2>
                     <div class="wrap">
-                      <button class="smbtn2">EDIT PROFILE</button>
+                      <button class="smbtn2" @click="editBtn">
+                        EDIT PROFILE
+                      </button>
                     </div>
                     <span></span>
                   </div>
@@ -301,10 +303,14 @@ export default {
 
       this.$store.commit("changeLogin", { type: false });
     },
+    editBtn(event) {
+      event.preventDefault();
+      this.$router.push("/profile");
+    },
   },
 };
 </script>
 
-<style>
+<style scoped>
 @import url("./MainView.css");
 </style>

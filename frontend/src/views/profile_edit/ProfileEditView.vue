@@ -3,18 +3,13 @@
     <section class="signup">
       <div class="login">
         <div class="form">
-          <p>SIGN UP</p>
+          <p>EDIT PROFILE</p>
           <br />
           <form class="login-form">
             <div class="inputs">
               <span class="icons"><img src="@/assets/icon/mail.png" /></span>
               <div class="group">
-                <input
-                  type="mail"
-                  v-model="email"
-                  class="logininput"
-                  required
-                />
+                <input type="email" class="logininput" required disabled />
                 <span class="highlight"></span>
                 <span class="bar"></span>
                 <label class="loginlabel">Email</label>
@@ -34,30 +29,10 @@
             <div class="inputs">
               <span class="icons"><img src="@/assets/icon/padlock.png" /></span>
               <div class="group">
-                <input
-                  type="password"
-                  v-model="pwd"
-                  required
-                  class="logininput"
-                />
+                <input type="password" class="logininput" required disabled />
                 <span class="highlight"></span>
                 <span class="bar"></span>
                 <label class="loginlabel">Passwd</label>
-              </div>
-            </div>
-
-            <div class="inputs">
-              <span class="icons"><img src="@/assets/icon/padlock.png" /></span>
-              <div class="group">
-                <input
-                  type="password"
-                  v-model="pwd2"
-                  required
-                  class="logininput"
-                />
-                <span class="highlight"></span>
-                <span class="bar"></span>
-                <label class="loginlabel">Confirm Password</label>
               </div>
             </div>
           </form>
@@ -114,7 +89,7 @@
             </div>
           </div>
           <div class="wrap">
-            <button class="smbtn" @click="btnClick">Submit</button>
+            <button class="smbtn" @click="editBtn">Edit</button>
           </div>
         </div>
       </div>
@@ -126,34 +101,21 @@
 import axios from "axios";
 
 export default {
-  name: "SignupView",
+  name: "ProfileEditView",
   data() {
     return {
-      email: "",
       name: "",
-      pwd: "",
-      pwd2: "",
       country: "",
       language: "",
     };
   },
   methods: {
-    btnClick(event) {
+    editBtn(event) {
       event.preventDefault();
-
-      // 이메일 입력 확인
-      if (this.email == "") {
-        return alert("이메일을 확인해주세요.");
-      }
 
       // 이름 확인
       if (this.name == "") {
         return alert("이름을 적어주세요.");
-      }
-
-      // 입력한 비밀번호가 다른지 확인
-      if (this.pwd == "" || this.pwd != this.pwd2) {
-        return alert("비밀번호를 다시 확인하십시오.");
       }
 
       // 라디오 사용 확인
@@ -162,29 +124,40 @@ export default {
       }
 
       const data = JSON.stringify({
-        email: this.email,
-        name: this.name,
-        country: this.country,
-        language: this.language,
-        password: this.pwd,
+        token: this.$store.state.accessToken,
+        info: {
+          name: this.name,
+          country: this.country,
+          language: this.language,
+        },
       });
 
       axios
-        .post("/api/auth/register", data, {
+        .post("/api/auth/changing_information", data, {
           headers: { timeout: 3000, "Content-Type": `application/json` },
         })
         .then(() => {
-          alert("가입이 완료되었습니다.");
-          location.href = "/";
+          alert("변경되었습니다.");
+          // 변경 내용 저장
+          this.$store.commit("changeInfo", {
+            name: this.name,
+            country: this.country,
+            language: this.language,
+          });
         })
         .catch(() => {
-          alert("이메일 혹은 패스워드를 다시 확인하십시오.");
+          alert("오류가 발생했습니다.");
         });
     },
+  },
+  mounted() {
+    this.name = this.$store.state.name;
+    this.country = this.$store.state.country;
+    this.language = this.$store.state.language;
   },
 };
 </script>
 
-<style scoped>
-@import url("./SignupView.css");
+<style>
+@import url("./ProfileEditView.css");
 </style>
