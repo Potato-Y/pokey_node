@@ -422,6 +422,10 @@ body {
   height: 0;
 }
 
+.cleardot {
+    list-style-type: none;
+}
+
 .info {
   text-align: right;
   color: #1f1e1e;

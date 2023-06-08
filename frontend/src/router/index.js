@@ -32,7 +32,7 @@ const routes = [
     path: "/chat",
     name: "chat",
     component: () =>
-      import(/* webpackChunkName: "chat" */ "../views/ChatView.vue"),
+      import(/* webpackChunkName: "chat" */ "../views/chat/ChatView.vue"),
   },
   {
     path: "/signup",

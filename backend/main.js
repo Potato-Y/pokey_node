@@ -208,6 +208,25 @@ io.on('connection', (socket) => {
       console.log(`not found user disconnect`);
     }
   });
+
+  // 채팅 메시지
+  socket.on('new_message', (msg, roomName, done) => {
+    // socket.to(roomName).emit("new_message", { socketId: socket.id, name: socket.user.name },msg);
+    io.sockets.adapter.rooms.get(roomName).forEach(async (socketId) => {
+      if (socketId) {
+        // socketid가 존재할 때
+        if (socket.id == socketId) {
+          // 차례대로 들어오면 이상없음
+          return;
+        }
+        socket.to(socketId).emit('new_message', { socketId: socket.id, name: socket.user.name }, msg);
+      }
+    });
+
+    console.log(`${socket.user.name} : ${msg}`);
+
+    done();
+  });
 });
 
 httpServer.listen(3000);
