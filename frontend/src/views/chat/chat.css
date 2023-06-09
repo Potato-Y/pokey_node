@@ -101,9 +101,9 @@ body {
   margin-top: 12px;
 }
 .video .video-history {
-  padding: 30px 30px 20px;
   border-bottom: 2px solid white;
-  overflow-y: scroll;
+
+  overflow: hidden;
   height: 583px;
 }
 .video .video-history::-webkit-scrollbar {
@@ -164,6 +164,8 @@ body {
 .video .video-message {
   padding: 10px;
   height: 162px;
+  display: flex;
+  overflow: auto;
 }
 .video .video-message textarea {
   width: 100%;

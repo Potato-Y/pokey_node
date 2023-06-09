@@ -30,7 +30,7 @@
               autoplay
               playsinline
               width="665"
-              height="543"
+              height="583"
             ></video>
           </div>
         </div>
