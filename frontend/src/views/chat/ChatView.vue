@@ -60,9 +60,9 @@
         <div class="chat-header clearfix">
           <div class="chat-about">
             <div class="chat-with">{{ roomName }}</div>
-            <div class="chat-num-messages">{{ textCount }}</div>
+            <div class="chat-num-messages">message :&nbsp;{{ textCount }}</div>
           </div>
-          <i class="fa fa-star"> </i>
+          <img class="logo-img" src="@/views/main/img/pokey_logo.png" />
         </div>
         <!-- end chat-header -->
 
