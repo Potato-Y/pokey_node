@@ -2,48 +2,54 @@
   <div>
     <div class="container clearfix">
       <div class="people-list" id="people-list">
-        <div class="search">
-          <input type="text" placeholder="search" />
-          <i class="fa fa-search"></i>
-        </div>
         <ul class="list">
-          <li class="clearfix">
-            <div class="about">
-              <div class="name">Talk for 4th Team</div>
-              <div class="status">
-                <i class="fa fa-circle online"></i> online
+          <div v-for="(item, index) in reversedTransList" :key="index">
+            <li class="clearfix">
+              <div class="about">
+                <div class="name">{{ item.name }}</div>
+                <div class="status">
+                  <i class="fa online"></i> {{ item.translation }}
+                </div>
               </div>
-            </div>
-          </li>
+            </li>
+            <br />
+          </div>
         </ul>
+
+        <div class="wrap">
+          <button class="smbtn" @click="download">Download</button>
+        </div>
       </div>
 
       <div class="video">
         <div class="video-history">
           <!-- 상대 화면 추가 -->
           <div>
-            <peer-video
-              :id="'peerFace-' + index"
-              v-for="(item, index) in peerConnections"
-              :key="index"
-              :stream="item.stream"
-            ></peer-video>
-            <div v-for="(item, index) in dummy" :key="index">
-              <div></div>
-            </div>
+            <video
+              id="big-peer-face"
+              autoplay
+              playsinline
+              width="665"
+              height="543"
+            ></video>
           </div>
         </div>
 
         <div class="video-message clearfix">
           <!-- 내 화면 추가-->
           <div id="myStream">
-            <video
-              id="myFace"
-              autoplay
-              playsinline
-              width="400"
-              height="400"
-            ></video>
+            <video id="myFace" autoplay playsinline height="142"></video>
+          </div>
+
+          <peer-video
+            :id="'peerFace-' + index"
+            v-for="(item, index) in peerConnections"
+            :key="index"
+            :stream="item.stream"
+            :click="videoClick"
+          ></peer-video>
+          <div v-for="(item, index) in dummy" :key="index">
+            <div></div>
           </div>
           <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
           <i class="fa fa-file-image-o"></i>
@@ -94,24 +100,50 @@
       <div class="footer">
         <nav role="navigation">
           <div id="menuToggle">
-            <input type="checkbox" />
+            <input class="menuinput" type="checkbox" />
 
-            <span></span>
-            <span></span>
-            <span></span>
-            <ul id="menu">
-              <div class="menuroom">
-                <input class="roomin" type="text" required />
-                <label class="roomla">Room Name</label>
-                <span class="roomsp"></span>
+            <span class="menuspan"></span>
+            <span class="menuspan"></span>
+            <span class="menuspan"></span>
+            <div id="menu">
+              <div class="menutop">
+                <!-- 등록한 이메일 리스트 -->
+                <div
+                  id="peremail"
+                  v-for="(email, index) in authUserEmails"
+                  :key="index"
+                >
+                  <div class="inputs">
+                    <div class="group">
+                      <label class="loginlabel">{{ email }}</label>
+                    </div>
+                  </div>
+
+                  <div class="wrap">
+                    <button class="smbtn" @click="sendDeleteAuthUser(email)">
+                      ✖
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div class="menuroom">
-                <input class="roomin" type="text" required />
-                <label class="roomla">Room passwd</label>
-                <span class="roomsp"></span>
+              <div class="inputs">
+                <div class="group">
+                  <input
+                    type="email"
+                    v-model="inputEmail"
+                    required
+                    class="logininput"
+                  />
+                  <span class="highlight"></span>
+                  <span class="bar"></span>
+                  <label class="loginlabel">Email</label>
+                </div>
               </div>
-              <button class="createroombtn" type="button">CREATE</button>
-            </ul>
+
+              <div class="wrap">
+                <button class="smbtn" @click="sendAuthUser">+</button>
+              </div>
+            </div>
           </div>
         </nav>
       </div>
@@ -151,17 +183,7 @@
       </div>
       <div class="info">
         <p>
-          <b>UserName</b>
-
-          <button id="connect" class="logout" type="submit">Login</button>
-          <button
-            id="disconnect"
-            class="logout"
-            type="submit"
-            disabled="disabled"
-          >
-            Logout
-          </button>
+          <b>{{ this.$store.state.name }}</b>
         </p>
       </div>
     </div>
@@ -170,16 +192,18 @@
 
 <script>
 import { socket } from "@/socket";
-//import PeerVideo from "@/components/PeerVideo.vue";
+import PeerVideo from "@/components/PeerVideo.vue";
+import txtDownload from "@/util/txtToProceedings.js";
 
 export default {
   name: "ChatView",
   components: {
-    //PeerVideo,
+    PeerVideo,
   },
   data() {
     return {
-      authUserEmail: "",
+      authUserEmails: [],
+      inputEmail: "",
       roomName: "",
       myStream: null,
       peerStream: null,
@@ -201,6 +225,7 @@ export default {
       text: "",
       textCount: 0,
       currentTime: "",
+      transList: [],
     };
   },
   created() {
@@ -325,8 +350,16 @@ export default {
     });
 
     // { socketId: socket.id, name: socket.user.name }, translation
-    socket.on("trans_return", (info, translation) => {
-      console.log(`${info.name}: ${translation}`);
+    socket.on("trans_return", (info, date, translation) => {
+      // var language = this.$store.state.language;
+      // var country = this.$store.state.country;
+
+      this.transList.push({
+        date: date,
+        name: info.name,
+        translation: translation,
+      });
+      // console.log(`[${getDate}] ${info.name}: ${translation}`);
     });
 
     socket.on("not_room_auth", () => {
@@ -496,14 +529,30 @@ export default {
     /**
      * 입장 가능한 유저의 정보를 서버에 전송한다.
      */
-    sendAuthUser() {
+    sendAuthUser(event) {
+      event.preventDefault();
+
+      this.authUserEmails.push(this.inputEmail);
+
+      this.socketAuthEmit();
+    },
+
+    sendDeleteAuthUser(email) {
+      this.authUserEmails = this.authUserEmails.filter(
+        (value) => value !== email
+      );
+      this.socketAuthEmit();
+    },
+
+    socketAuthEmit() {
       socket.emit(
         "setAuthUser",
-        this.authUserEmail,
+        this.authUserEmails,
         this.roomName,
         (result) => {
           if (result === true) {
-            alert("등록되었습니다.");
+            alert("처리되었습니다.");
+            this.inputEmail = "";
           } else {
             alert("등록에 실패하였습니다.");
           }
@@ -529,6 +578,15 @@ export default {
 
         // 음소거 중이면 전송하지 않도록
         if (!this.muted) {
+          const name = this.$store.state.name;
+
+          const date = new Date();
+
+          this.transList.push({
+            date: date,
+            name: name,
+            translation: speechResult,
+          });
           socket.emit("trans", this.roomName, speechResult);
         }
       };
@@ -606,6 +664,18 @@ export default {
         message +
         "                              </div>\n" +
         "                          </li>";
+    },
+    videoClick(item) {
+      const bigPeerFace = document.querySelector("#big-peer-face");
+      bigPeerFace.srcObject = item;
+    },
+    download() {
+      txtDownload(this.roomName, this.transList);
+    },
+  },
+  computed: {
+    reversedTransList() {
+      return this.transList.slice().reverse();
     },
   },
 };

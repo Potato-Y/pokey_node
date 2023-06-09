@@ -4,15 +4,16 @@
     :id="id"
     autoplay
     playsinline
-    width="400"
-    height="400"
+    height="142"
+    @click="setChang"
+    style="margin-left: 10px"
   ></video>
 </template>
 
 <script>
 export default {
   name: "PeerVideo",
-  props: ["id", "stream"],
+  props: ["id", "stream", "click"],
   watch: {
     stream(newStream) {
       if (newStream) {
@@ -24,6 +25,11 @@ export default {
     if (this.stream) {
       this.$refs.videoTag.srcObject = this.stream;
     }
+  },
+  methods: {
+    setChang() {
+      this.click(this.stream);
+    },
   },
 };
 </script>

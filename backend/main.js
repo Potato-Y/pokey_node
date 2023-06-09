@@ -123,11 +123,11 @@ io.on('connection', (socket) => {
   });
 
   // 방에 접속 가능한 유저를 등록한다. 해당 기능은 방장만 사용 가능하다.
-  socket.on('setAuthUser', (userEmail, roomName, done) => {
+  socket.on('setAuthUser', (userEmails, roomName, done) => {
     try {
       // 요청자의 정보와 방장의 정보가 동일할 경우에 진행
       if (socket.user.email === io.sockets.adapter.rooms.get(roomName).roomAdmin) {
-        io.sockets.adapter.rooms.get(roomName).authUser = [userEmail];
+        io.sockets.adapter.rooms.get(roomName).authUser = userEmails;
         done(true);
       } else {
         done(false);
