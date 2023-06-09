@@ -59,10 +59,10 @@
       <div class="chat" id="talk">
         <div class="chat-header clearfix">
           <div class="chat-about">
-            <div class="chat-with">___Chatting Room</div>
-            <div class="chat-num-messages">maessages's number</div>
+            <div class="chat-with">{{ roomName }}</div>
+            <div class="chat-num-messages">{{ textCount }}</div>
           </div>
-          <i class="fa fa-star"></i>
+          <i class="fa fa-star"> </i>
         </div>
         <!-- end chat-header -->
 
@@ -612,6 +612,8 @@ export default {
       const input = inputMsg.querySelector("textarea");
       const text = input.value;
 
+      if (text == "") return;
+
       if (event) {
         socket.emit("new_message", text, this.roomName, () => {
           this.addMessageMine(`나`, `${text}`, this.textCount);
@@ -680,6 +682,6 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 @import url("./chat.css");
 </style>

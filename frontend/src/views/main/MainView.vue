@@ -104,7 +104,9 @@
                     <button class="smbtn" @click="logoutButton">LOG OUT</button>
                   </div>
                   <div class="wrap">
-                    <button class="smbtn">CREATE ROOM</button>
+                    <button class="smbtn" @click="roomBtnClick">
+                      CREATE/ENTER ROOM
+                    </button>
                   </div>
                 </div>
               </div>
@@ -306,6 +308,10 @@ export default {
     editBtn(event) {
       event.preventDefault();
       this.$router.push("/profile");
+    },
+    roomBtnClick(event) {
+      event.preventDefault();
+      this.$router.push("/room");
     },
   },
 };
