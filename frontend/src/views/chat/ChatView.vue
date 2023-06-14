@@ -82,7 +82,7 @@
               class="form-control"
               placeholder="Type your message"
               rows="3"
-              @keydown.enter.exact.prevent="msgSubmit"
+              @keypress.enter.exact.prevent="msgSubmit"
             ></textarea>
           </form>
 
@@ -643,7 +643,9 @@ export default {
         "\n" +
         "                              </div>\n" +
         '                              <div class="message other-message float-right">\n' +
+        '<p class="word-break">' +
         message +
+        "</p>\n" +
         "                              </div>\n" +
         "                          </li>";
     },
@@ -663,7 +665,9 @@ export default {
         "</span>\n" +
         "                              </div>\n" +
         '                              <div class="message my-message">\n' +
+        '<p class="word-break">' +
         message +
+        "</p>\n" +
         "                              </div>\n" +
         "                          </li>";
     },

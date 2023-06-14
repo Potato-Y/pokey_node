@@ -6,7 +6,7 @@ const connectDB = require('./src/db/dbController');
 const path = require('path');
 const cors = require('cors');
 const { socketAuthMiddleware } = require('./src/middlewares/auth-middleware');
-// const { Translate } = require('@google-cloud/translate').v2; //api 사용을 위해 모듈 가져오기
+const { Translate } = require('@google-cloud/translate').v2; //api 사용을 위해 모듈 가져오기
 
 connectDB();
 
@@ -35,9 +35,9 @@ var indexRouter = require('./src/routes/index');
 app.use('/', indexRouter);
 app.use('*', indexRouter);
 
-// const translate = new Translate({
-//   keyFilename: path.join(__dirname, './google_cloud_key.json'), // 인증 정보 파일의 경로를 옵션으로 설정합니다.
-// });
+const translate = new Translate({
+  keyFilename: path.join(__dirname, './google_cloud_key.json'), // 인증 정보 파일의 경로를 옵션으로 설정합니다.
+});
 
 const translateText = async (text, targetLanguage) => {
   //translate.translate사용하여 메시지 변역 결과 반환
@@ -182,20 +182,22 @@ io.on('connection', (socket) => {
           }
 
           if (!searchTranslationData[0]) {
-            // const translation = await translateText(text, language); // 번역할 언어 설정
+            const translation = await translateText(text, language); // 번역할 언어 설정
             // 원본 유저의 정보, 번역된 정보를 전송
-            // data.push({ language: language, translation: translation });
-            data.push({ language: language, translation: text }); // 테스트용
+            console.log('tra: ');
+            console.log(translation);
+            data.push({ language: language, translation: translation });
+            // data.push({ language: language, translation: text }); // 테스트용
+
+            // 만약 data에 있는 내용이면 그걸 보내주는 코드가 필요함.
+
+            console.log(socketId + ' 전송을 함. 번역 내용:' + translation);
+            // console.log(socketId + ' 전송을 함. 번역 내용:' + text); // 번역 끄고 테스트 하는 용
+
+            // 번역 요청 한 사람의 정보, 번역 내용
+            socket.to(socketId).emit('trans_return', { socketId: socket.id, name: socket.user.name }, date, translation);
+            // socket.to(socketId).emit('trans_return', { socketId: socket.id, name: socket.user.name }, date, text); // 번역 끄고 테스트 하는 용
           }
-
-          // 만약 data에 있는 내용이면 그걸 보내주는 코드가 필요함.
-
-          // console.log(socketId + ' 전송을 함. 번역 내용:' + translation);
-          console.log(socketId + ' 전송을 함. 번역 내용:' + text); // 번역 끄고 테스트 하는 용
-
-          // 번역 요청 한 사람의 정보, 번역 내용
-          // socket.to(socketId).emit('trans_return', { socketId: socket.id, name: socket.user.name },date, translation);
-          socket.to(socketId).emit('trans_return', { socketId: socket.id, name: socket.user.name }, date, text); // 번역 끄고 테스트 하는 용
         }
       }
     });
