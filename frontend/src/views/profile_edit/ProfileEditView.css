@@ -1,0 +1,501 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    font-family: "Open Sans",sans-serif;
+    scroll-behavior: smooth;
+}
+a, body {
+    color: #282828;
+}
+a {
+    text-decoration: none;
+    transition: opacity .2s ease-in-out;
+}
+body {
+    width: 100%;
+    height: 969px;
+    padding-top: 75px;
+    line-height: 1;
+    overflow-y: scroll;
+    background-image: linear-gradient(to right top, #FFDFFF, #FFD5EC, #FFD2BF, #EDEEFF, #E6E6FA);
+    -webkit-font-smoothing: antialiased;
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none; /* 파이어폭스 */
+    padding-top: 170px;
+}
+body::-webkit-scrollbar {
+    display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}
+
+
+/* form */
+.inputs {
+    padding-top: 20px;
+}
+.login {
+    width: 35%;
+    height: 650px;
+    margin: auto;
+    border-radius: 50px;
+    opacity: 0.7;
+    display: flex;
+    align-items: center;
+}
+
+.form {
+    position: relative;
+    z-index: 1;
+    border-radius: 10px;
+    margin: 0 auto;
+    text-align: center;
+    border-radius: 50px;
+    box-shadow: -11px 11px 22px #bebebe;
+    font-size: 30px;
+    letter-spacing: 0.5px;
+    width: 100%;
+    height: 100%;
+    padding-top: 40px;
+}
+
+.form input {
+    outline: 0;
+    width: 90%;
+    border: 0;
+    border-radius: 5px;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+    opacity: 0.5;
+    background: white;
+}
+
+.form input:focus {
+    background: #e0e0e0;
+}
+
+
+.wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 54px;
+}
+
+.wrap .smbtn {
+    width: 80%;
+    height: 45px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+    color: #000;
+    background-color: #fff;
+    border: none;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+    margin-top: 25px;
+}
+
+.wrap .smbtn:hover {
+    background-color: #CEC7E0;
+    box-shadow: 0px 15px 20px rgba(230, 230, 250, 0.4);
+    color: #fff;
+    transform: translateY(-7px);
+}
+
+
+/* 로그인 폼 */
+/* form starting stylings ------------------------------- */
+.icons {
+    float: left;
+    padding-top: 7px;
+}
+.group 			  {
+    position: relative;
+    margin-bottom: 25px;
+    padding-left: 50px;
+}
+.logininput 				{
+    font-size:18px;
+    padding:10px 10px 10px 5px;
+    display:block;
+    width:300px;
+    border:none;
+    border-bottom:1px solid #757575;
+}
+.logininput:focus 		{ outline:none; }
+
+/* LABEL ======================================= */
+.loginlabel 				 {
+    color: #999;
+    font-size: 16px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 15px;
+    top: 15px;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+    padding-left: 50px;
+}
+
+/* active state */
+.logininput:focus ~ .loginlabel, .logininput:valid ~ .loginlabel 		{
+    top:-20px;
+    font-size:14px;
+    color:#5264AE;
+}
+
+/* BOTTOM BARS ================================= */
+.bar 	{
+    position:relative;
+    display:block;
+    width:88%;
+    margin-left: 7px;
+}
+.bar:before, .bar:after 	{
+    content:'';
+    height:2px;
+    width:0;
+    bottom:1px;
+    position:absolute;
+    background:#5264AE;
+    transition:0.2s ease all;
+    -moz-transition:0.2s ease all;
+    -webkit-transition:0.2s ease all;
+}
+.bar:before {
+    left:50%;
+}
+.bar:after {
+    right:50%;
+}
+
+/* active state */
+.logininput:focus ~ .bar:before, .logininput:focus ~ .bar:after {
+    width:50%;
+}
+
+/* HIGHLIGHTER ================================== */
+.highlight {
+    position:absolute;
+    height:60%;
+    width:100px;
+    top:25%;
+    left:0;
+    pointer-events:none;
+    opacity:0.5;
+    margin-left: 60px;
+}
+
+/* active state */
+.logininput:focus ~ .highlight {
+    -webkit-animation:inputHighlighter 0.3s ease;
+    -moz-animation:inputHighlighter 0.3s ease;
+    animation:inputHighlighter 0.3s ease;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+    from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
+}
+@-moz-keyframes inputHighlighter {
+    from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
+}
+@keyframes inputHighlighter {
+    from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
+}
+.login-form {
+    padding-left: 5%;
+    padding-top: 15px;
+}
+
+
+/* 배경 애니메이션 */
+.area {
+    z-index: -5;
+}
+.squares {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.squares li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.3);
+    animation: animate 8s linear infinite;
+    bottom: -150px;
+    z-index: 1;
+}
+
+.squares li:nth-child(1) {
+    left: 25%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+}
+
+.squares li:nth-child(2) {
+    left: 10%;
+    width: 70px;
+    height: 70px;
+    animation-delay: 0s;
+    animation-duration: 12s;
+}
+
+.squares li:nth-child(3) {
+    left: 70%;
+    width: 30px;
+    height: 30px;
+    animation-delay: 2s;
+}
+
+.squares li:nth-child(4) {
+    left: 40%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+}
+
+.squares li:nth-child(5) {
+    left: 65%;
+    width: 50px;
+    height: 50px;
+    animation-delay: 0s;
+}
+
+.squares li:nth-child(6) {
+    left: 75%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 0s;
+}
+
+.squares li:nth-child(7) {
+    left: 35%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 4s;
+}
+
+.squares li:nth-child(8) {
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    animation-delay: 2s;
+    animation-duration: 30s;
+}
+
+.squares li:nth-child(9) {
+    left: 20%;
+    width: 30px;
+    height: 30px;
+    animation-delay: 2s;
+    animation-duration: 25s;
+}
+
+.squares li:nth-child(10) {
+    left: 85%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 11s;
+}
+
+.squares li:nth-child(11) {
+    left: 35%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+}
+
+.squares li:nth-child(12) {
+    left: 50%;
+    width: 70px;
+    height: 70px;
+    animation-delay: 2s;
+    animation-duration: 7s;
+}
+
+.squares li:nth-child(13) {
+    left: 20%;
+    width: 70px;
+    height: 70px;
+    animation-delay: 0s;
+    animation-duration: 15s;
+}
+
+.squares li:nth-child(14) {
+    left: 85%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 11s;
+}
+
+@keyframes animate {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+
+    100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+}
+
+
+
+
+
+/* radio button */
+.toggle-button {
+    position: relative;
+    display: inline-block;
+    color: black;
+    margin: 0 20px;
+    letter-spacing: 0.2em;
+}
+.toggle-button label {
+    display: inline-block;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: left;
+}
+.toggle-button input {
+    display: none;
+}
+.toggle-button__icon {
+    cursor: pointer;
+    pointer-events: none;
+}
+.toggle-button__icon:before, .toggle-button__icon:after {
+    content: "";
+    position: absolute;
+    transition: 0.2s ease-out;
+}
+.toggle-button label {
+    width: 110px;
+    height: 20px;
+    line-height: 20px;
+    transition: all 0.2s;
+}
+.toggle-button label:before, .toggle-button label:after {
+    position: absolute;
+    top: 0;
+    left: 30px;
+    width: 110px;
+    transition: all 0.2s .1s ease-out;
+}
+.toggle-button label:before {
+    content: attr(data-text);
+}
+
+.toggle-button input:checked ~ .toggle-button__icon:before {
+    animation: wave .7s ease-out;
+}
+
+.toggle-button input:checked ~ .toggle-button__icon:after {
+    transform: scale(1);
+    animation: zoomIn .2s;
+}
+
+.toggle-button .toggle-button__icon {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: inset 1px 1px 10px rgba(0, 0, 0, 0.15);
+}
+.toggle-button .toggle-button__icon:before, .toggle-button .toggle-button__icon:after {
+    border-radius: 50%;
+}
+.toggle-button .toggle-button__icon:before {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+}
+.toggle-button .toggle-button__icon:after {
+    top: 4px;
+    left: 4px;
+    width: 60%;
+    height: 60%;
+    background: #7E506C;
+    animation: zoomOut .2s ease-out;
+    transform: scale(0);
+    transition: none;
+}
+
+.toggle-button:hover input:not(:checked) ~ .toggle-button__icon {
+    animation: hover .2s;
+}
+
+.toggle-button:hover input:not(:checked) ~ label:before {
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+@keyframes zoomOut {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.2); }
+    100% { transform: scale(0); }
+}
+
+@keyframes zoomIn {
+    0% { transform: scale(0); }
+    90% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+@keyframes hover {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes wave {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    40% { opacity: 0.2; }
+    100% {
+        opacity: 0;
+        transform: scale(1.5);
+    }
+}
+
+.langbtn {
+    font-size: 15px;
+    margin-top: 35px;
+}

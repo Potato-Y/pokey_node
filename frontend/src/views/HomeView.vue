@@ -1,18 +1,35 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <UserBox />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+// import { socket } from "@/socket";
+import UserBox from "../components/UserBox.vue";
 
 export default {
   name: "HomeView",
   components: {
-    HelloWorld,
+    UserBox,
+  },
+  mounted() {
+    // this.connect();
+  },
+  methods: {
+    // connect() {
+    //   socket.connect();
+    // },
+    // disconnect() {
+    //   socket.disconnect();
+    // },
+  },
+  data() {
+    return {
+      isLoading: false,
+      value: "",
+    };
   },
 };
 </script>

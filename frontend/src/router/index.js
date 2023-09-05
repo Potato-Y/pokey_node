@@ -1,11 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+// import HomeView from "../views/HomeView.vue";
 
 const routes = [
+  // {
+  //   path: "/",
+  //   name: "home",
+  //   component: HomeView,
+  // },
   {
     path: "/",
-    name: "home",
-    component: HomeView,
+    name: "main",
+    component: () =>
+      import(/* webpackChunkName: "main" */ "../views/main/MainView.vue"),
   },
   {
     path: "/about",
@@ -15,6 +21,28 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+  },
+  {
+    path: "/room",
+    name: "room",
+    component: () =>
+      import(/* webpackChunkName: "room" */ "../views/room/RoomView.vue"),
+  },
+  {
+    path: "/chat",
+    name: "chat",
+    component: () =>
+      import(/* webpackChunkName: "chat" */ "../views/chat/ChatView.vue"),
+  },
+  {
+    path: "/signup",
+    name: "signup",
+    component: () => import("../views/signup/SignupView.vue"),
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    component: () => import("../views/profile_edit/ProfileEditView.vue"),
   },
 ];
 

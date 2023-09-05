@@ -1,0 +1,906 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700);
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html {
+  background: linear-gradient(#d0d0f5, WHITE);
+  height: 105%;
+}
+body {
+  font: 14px/20px 'Lato', Arial, sans-serif;
+  padding: 0;
+  min-height: 100%;
+  padding-top: 70px;
+}
+
+.container {
+  margin: 0 auto;
+  width: 80%;
+  background: #fffafa;
+  border-radius: 5px;
+  opacity: 0.8;
+  -webkit-box-shadow: 3px -1px 10px -1px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 3px -1px 10px -1px rgba(0, 0, 0, 0.2);
+  box-shadow: 3px -1px 10px -1px rgba(0, 0, 0, 0.2);
+}
+
+.people-list {
+  width: 20%;
+  float: left;
+}
+.people-list input {
+  border-radius: 3px;
+  border: none;
+  padding: 14px;
+  color: white;
+  background: #e6e6fa;
+  opacity: 0.8;
+  width: 90%;
+  font-size: 14px;
+}
+.people-list .fa-search {
+  position: relative;
+  left: -25px;
+}
+.people-list ul {
+  padding: 20px;
+  height: 608px;
+  overflow-y: scroll;
+}
+.people-list ul li {
+  padding-bottom: 20px;
+}
+.people-list img {
+  float: left;
+}
+.people-list .about {
+  float: left;
+  margin-top: 8px;
+}
+.people-list .about {
+  padding-left: 8px;
+}
+.people-list .name {
+  color: DARKGRAY;
+}
+.people-list .status {
+  color: #92959e;
+}
+
+.video {
+  width: 50%;
+  float: left;
+  background: #f2f5f8;
+  border-radius: 5px;
+  color: #434651;
+}
+.video .video-header {
+  padding: 20px;
+  border-bottom: 2px solid white;
+}
+.video .video-header img {
+  float: left;
+}
+.video .video-header .video-about {
+  float: left;
+  padding-left: 10px;
+  margin-top: 6px;
+}
+.video .video-header .video-with {
+  font-weight: bold;
+  font-size: 16px;
+}
+.video .video-header .video-num-messages {
+  color: #92959e;
+}
+.video .video-header .fa-star {
+  float: right;
+  color: #d8dadf;
+  font-size: 20px;
+  margin-top: 12px;
+}
+.video .video-history {
+  border-bottom: 2px solid white;
+
+  overflow: hidden;
+  height: 583px;
+}
+.video .video-history::-webkit-scrollbar {
+  width: 10px;
+}
+.video .video-history::-webkit-scrollbar-thumb {
+  background-color: #2f3542;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+.video .video-history::-webkit-scrollbar-track {
+  background-color: grey;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
+
+.video .video-history .message-data {
+  margin-bottom: 15px;
+}
+.video .video-history .message-data-time {
+  color: #a8aab1;
+  padding-left: 6px;
+}
+.video .video-history .message {
+  color: white;
+  padding: 18px 20px;
+  line-height: 26px;
+  font-size: 16px;
+  border-radius: 7px;
+  margin-bottom: 30px;
+  width: 90%;
+  position: relative;
+}
+.video .video-history .message:after {
+  bottom: 100%;
+  left: 7%;
+  border: solid transparent;
+  content: ' ';
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-bottom-color: #86bb71;
+  border-width: 10px;
+  margin-left: -10px;
+}
+.video .video-history .my-message {
+  background: #86bb71;
+}
+.video .video-history .other-message {
+  background: #94c2ed;
+}
+.video .video-history .other-message:after {
+  border-bottom-color: #94c2ed;
+  left: 93%;
+}
+.video .video-message {
+  padding: 10px;
+  height: 162px;
+  display: flex;
+  overflow: auto;
+}
+.video .video-message textarea {
+  width: 100%;
+  border: none;
+  padding: 10px 20px;
+  font: 14px/22px 'Lato', Arial, sans-serif;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  resize: none;
+}
+.video .video-message .fa-file-o,
+.video .video-message .fa-file-image-o {
+  font-size: 16px;
+  color: gray;
+  cursor: pointer;
+}
+.video .video-message button {
+  float: right;
+  color: #94c2ed;
+  font-size: 16px;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  background: #f2f5f8;
+}
+.video .video-message button:hover {
+  color: #75b1e8;
+}
+.wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 13px;
+}
+
+.wrap .smbtn {
+  width: 80%;
+  height: 45px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+  margin-top: 25px;
+}
+
+.wrap .smbtn:hover {
+  background-color: #cec7e0;
+  box-shadow: 0px 15px 20px rgba(230, 230, 250, 0.4);
+  color: #fff;
+  transform: translateY(-7px);
+}
+
+#footer .toggle {
+  display: flex;
+  align-items: center;
+}
+#footer .toggle .togglebtn {
+  margin-left: 30px;
+  float: left;
+}
+
+.toggleSwitch {
+  width: 80px;
+  margin: 5px;
+  height: 38px;
+  display: block;
+  position: relative;
+  border-radius: 30px;
+  background-color: #fff;
+  box-shadow: 0 0 16px 3px rgba(0 0 0 / 15%);
+  cursor: pointer;
+}
+
+.toggleSwitch .toggleButton {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: #ffd2bf;
+}
+#togglech:checked ~ .toggleSwitch {
+  background: #ffd2bf;
+}
+
+#togglech:checked ~ .toggleSwitch .toggleButton {
+  left: calc(100% - 37px);
+  background: #fff;
+}
+
+.toggleSwitch,
+.toggleButton {
+  transition: all 0.2s ease-in;
+}
+#togglech2:checked ~ .toggleSwitch {
+  background: #ffd2bf;
+}
+
+#togglech2:checked ~ .toggleSwitch .toggleButton {
+  left: calc(100% - 37px);
+  background: #fff;
+}
+
+.toggleSwitch,
+.toggleButton {
+  transition: all 0.2s ease-in;
+}
+
+.chat {
+  width: 29%;
+  float: left;
+  background: #f2f5f8;
+  border-radius: 5px;
+  color: #434651;
+}
+.chat .chat-header {
+  padding: 20px;
+  border-bottom: 2px solid white;
+}
+.chat .chat-header img {
+  float: left;
+}
+.chat .chat-header .chat-about {
+  float: left;
+  padding-left: 10px;
+  margin-top: 6px;
+}
+.chat .chat-header .chat-with {
+  font-weight: bold;
+  font-size: 16px;
+}
+.chat .chat-header .chat-num-messages {
+  color: #92959e;
+}
+.chat .chat-header .fa-star {
+  float: right;
+  color: #d8dadf;
+  font-size: 20px;
+  margin-top: 12px;
+}
+.chat .chat-history {
+  padding: 30px 30px 20px;
+  border-bottom: 2px solid white;
+  overflow-y: scroll;
+  height: 493px;
+}
+.chat .chat-history::-webkit-scrollbar {
+  width: 10px;
+}
+.chat .chat-history::-webkit-scrollbar-thumb {
+  background-color: #2f3542;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+.chat .chat-history::-webkit-scrollbar-track {
+  background-color: grey;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
+
+.chat .chat-history .message-data {
+  margin-bottom: 15px;
+  margin-left: 4px;
+}
+.chat .chat-history .message-data-time {
+  color: #a8aab1;
+  padding-left: 16px;
+}
+.chat .chat-history .message {
+  color: white;
+  padding: 0px 20px;
+  line-height: 26px;
+  font-size: 16px;
+  border-radius: 7px;
+  margin-bottom: 30px;
+  width: 90%;
+  position: relative;
+}
+.chat .chat-history .message:after {
+  bottom: 100%;
+  left: 7%;
+  border: solid transparent;
+  content: ' ';
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-bottom-color: #86bb71;
+  border-width: 10px;
+  margin-left: -10px;
+}
+.chat .chat-history .my-message {
+  background: #86bb71;
+}
+.chat .chat-history .other-message {
+  background: #94c2ed;
+}
+.chat .chat-history .other-message:after {
+  border-bottom-color: #94c2ed;
+  left: 93%;
+}
+.chat .chat-message {
+  padding: 20px;
+}
+.chat .chat-message textarea {
+  width: 100%;
+  border: none;
+  padding: 10px 20px;
+  font: 14px/22px 'Lato', Arial, sans-serif;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  resize: none;
+}
+.chat .chat-message .fa-file-o,
+.chat .chat-message .fa-file-image-o {
+  font-size: 16px;
+  color: gray;
+  cursor: pointer;
+}
+.chat .chat-message button {
+  float: right;
+  color: darkslategray;
+  font-size: 16px;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  background: #f2f5f8;
+}
+.chat .chat-message button:hover {
+  color: #75b1e8;
+}
+
+.online,
+.offline,
+.me {
+  margin-right: 3px;
+  font-size: 10px;
+}
+
+.online {
+  color: #86bb71;
+}
+
+.offline {
+  color: #e38968;
+}
+
+.me {
+  color: #94c2ed;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.float-right {
+  float: right;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: ' ';
+  clear: both;
+  height: 0;
+}
+
+.info {
+  text-align: right;
+  color: #1f1e1e;
+  font-size: 16px;
+  padding-right: 100px;
+  align-items: center;
+  display: flex;
+  float: left;
+}
+/*.info .logout {*/
+/*  !*background: url("../img/logout.png") no-repeat center;*!*/
+/*  border: none;*/
+/*  width: 20px;*/
+/*  height: 20px;*/
+/*  cursor: pointer;*/
+/*}*/
+
+/*SeungTae's CSS*/
+
+#menuToggle {
+  display: block;
+  position: relative;
+  top: 50px;
+  left: 50px;
+
+  z-index: 1;
+
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#menuToggle a {
+  text-decoration: none;
+  color: #232323;
+
+  transition: color 0.3s ease;
+}
+
+#menuToggle a:hover {
+  color: tomato;
+}
+
+#menuToggle .menuinput {
+  display: block;
+  width: 40px;
+  height: 32px;
+  position: absolute;
+
+  cursor: pointer;
+
+  opacity: 0; /* hide this */
+  z-index: 2; /* and place it over the hamburger */
+
+  -webkit-touch-callout: none;
+}
+
+#menuToggle .menuspan {
+  display: block;
+  width: 33px;
+  height: 4px;
+  margin-bottom: 5px;
+  position: relative;
+
+  background: #cdcdcd;
+  border-radius: 3px;
+
+  z-index: 1;
+
+  transform-origin: 4px 0px;
+
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
+}
+
+#menuToggle span:first-child {
+  transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2) {
+  transform-origin: 0% 100%;
+}
+
+/*
+ * Transform all the slices of hamburger
+ * into a crossmark.
+ */
+#menuToggle .menuinput:checked ~ span {
+  opacity: 1;
+  transform: rotate(45deg) translate(-2px, -1px);
+  background: #232323;
+}
+
+/*
+ * But let's hide the middle one.
+ */
+#menuToggle .menuinput:checked ~ span:nth-last-child(3) {
+  opacity: 0;
+  transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+/*
+ * Ohyeah and the last one should go the other direction
+ */
+#menuToggle .menuinput:checked ~ span:nth-last-child(2) {
+  transform: rotate(-45deg) translate(0, -1px);
+}
+
+/*
+ * Make this absolute positioned
+ * at the top left of the screen
+ */
+#menu {
+  position: absolute;
+  height: 350px;
+  margin: -369px 0 0 -50px;
+  padding-bottom: 80px;
+  background: WHITE;
+  list-style-type: none;
+  -webkit-font-smoothing: antialiased;
+  transform-origin: 0% 0%;
+  transform: translate(-100%, 0);
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+  opacity: 0.8;
+  width: 250px;
+  border-radius: 0px 25px 25px 0px;
+  box-shadow: 8px 3px 20px -1px rgba(0, 0, 0, 0.2);
+}
+.menutop {
+  height: 270px;
+}
+#menu li {
+  padding: 10px 0;
+  font-size: 22px;
+}
+.inputs {
+  float: left;
+  width: 150px;
+  margin-top: 15px;
+}
+/*
+ * And let's slide it in from the left
+ */
+#menuToggle input:checked ~ div {
+  transform: none;
+}
+#menuToggle button {
+  outline: none;
+  width: 45px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+/* LOGOUT BUTTON */
+.logout {
+  border: 2px solid #000;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  outline: none;
+  overflow: hidden;
+}
+.logout:after {
+  content: ' ';
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s ease;
+  -webkit-transform: scale(0.1);
+  transform: scale(0.1);
+}
+.logout:hover {
+  color: #fff;
+}
+.logout:hover:after {
+  background: #000;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+
+#footer {
+  position: fixed;
+  background-color: rgba(230, 230, 250, 0.5);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 110px;
+  display: flex;
+}
+#footer .footer {
+  float: left;
+}
+#footer .ft-toggle {
+  display: flex;
+  float: left;
+  margin: auto;
+  align-items: center;
+}
+
+@media (max-width: 1440px) {
+}
+
+.wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 13px;
+}
+
+.wrap .smbtn {
+  width: 80%;
+  height: 45px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+  margin-top: 25px;
+}
+
+.wrap .smbtn:hover {
+  background-color: #cec7e0;
+  box-shadow: 0px 15px 20px rgba(230, 230, 250, 0.4);
+  color: #fff;
+  transform: translateY(-7px);
+}
+
+/* 로그인 폼 */
+/* form starting stylings ------------------------------- */
+.icons {
+  float: left;
+  padding-top: 7px;
+}
+.group {
+  position: relative;
+  padding-left: 20px;
+}
+.logininput {
+  font-size: 12px;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  width: 170px;
+  border: none;
+  /* border-bottom: 1px solid #757575; */
+}
+.logininput:focus {
+  outline: none;
+}
+
+/* LABEL ======================================= */
+.loginlabel {
+  color: #999;
+  font-size: 16px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 15px;
+  top: 15px;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+  padding-left: 20px;
+}
+
+/* active state */
+.logininput:focus ~ .loginlabel,
+.logininput:valid ~ .loginlabel {
+  top: -20px;
+  font-size: 14px;
+  color: #5264ae;
+}
+
+/* BOTTOM BARS ================================= */
+.bar {
+  position: relative;
+  display: block;
+  width: 88%;
+  margin-left: 7px;
+}
+.bar:before,
+.bar:after {
+  content: '';
+  height: 2px;
+  width: 0;
+  bottom: 1px;
+  position: absolute;
+  background: #5264ae;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+.bar:before {
+  left: 50%;
+}
+.bar:after {
+  right: 50%;
+}
+
+/* active state */
+.logininput:focus ~ .bar:before,
+.logininput:focus ~ .bar:after {
+  width: 50%;
+}
+
+/* HIGHLIGHTER ================================== */
+.highlight {
+  position: absolute;
+  height: 60%;
+  width: 100px;
+  top: 25%;
+  left: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  margin-left: 20px;
+}
+
+/* active state */
+.logininput:focus ~ .highlight {
+  -webkit-animation: inputHighlighter 0.3s ease;
+  -moz-animation: inputHighlighter 0.3s ease;
+  animation: inputHighlighter 0.3s ease;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+  from {
+    background: #5264ae;
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
+}
+@-moz-keyframes inputHighlighter {
+  from {
+    background: #5264ae;
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
+}
+@keyframes inputHighlighter {
+  from {
+    background: #5264ae;
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
+}
+
+.login-form {
+  padding-left: 5%;
+  padding-top: 15px;
+}
+
+#peremail {
+  background: white;
+  width: 220px;
+  height: 65px;
+  border-radius: 25px 25px 25px 25px;
+}
+
+#peremail .inputs {
+  float: left;
+  width: 150px;
+  margin-top: 8px;
+}
+
+#peremail .group {
+  position: relative;
+  padding-left: 20px;
+}
+
+#peremail .loginlabel {
+  color: gray;
+  font-size: 16px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 15px;
+  top: 15px;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+  padding-left: 20px;
+}
+
+#peremail .smbtn {
+  width: 45px;
+  height: 45px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+  margin-top: 10px;
+}
+
+#peremail .smbtn:hover {
+  background-color: #cec7e0;
+  box-shadow: 0px 15px 20px rgba(230, 230, 250, 0.4);
+  color: #fff;
+  transform: translateY(-7px);
+}
+
+.cleardot {
+  list-style-type: none;
+}
+
+.logo-img {
+  position: absolute;
+  right: 0;
+  margin-right: 11%;
+  top: 85px;
+
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+
+.word-break {
+  word-break: break-all;
+}
