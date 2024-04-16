@@ -1,0 +1,1092 @@
+{
+	"info": {
+		"_postman_id": "06be77be-9c00-4c9f-8fba-9992c7eb383f",
+		"name": "pokey_node",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26755334"
+	},
+	"item": [
+		{
+			"name": "회원 가입",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"test_user_1\",\n    \"email\":\"test@mail.com\",\n    \"country\":\"KR\",\n    \"language\":\"KO\",\n    \"password\":\"test\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "회원 가입 성공",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"test_user_1\",\n    \"email\":\"test@mail.com\",\n    \"country\":\"KR\",\n    \"language\":\"KO\",\n    \"password\":\"test\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "X-Requested-With"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "7"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"7-Qqj2Udef0AXurAYS32RCuYOgEYQ\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 24 May 2023 04:15:28 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "Success"
+				},
+				{
+					"name": "회원 가입 실패",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"test_user_1\",\n    \"email\":\"test@mail.com\",\n    \"country\":\"KR\",\n    \"language\":\"KO\",\n    \"password\":\"test\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "X-Requested-With"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "59"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"3b-gfYUNKOyrHrBDtLAmfdCunlwOaY\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 24 May 2023 04:15:43 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"errors\": [\n        {\n            \"errors\": [\n                {\n                    \"message\": \"User already exists\"\n                }\n            ]\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "로그인",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"test@mail.com\",\n    \"password\":\"test\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "로그인 성공",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"test@mail.com\",\n    \"password\":\"test\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "X-Requested-With"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "239"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"ef-z0QrqVwX7Fn9ErqIweHmzXQg02U\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 24 May 2023 04:16:08 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmQ4ZjVmMTcxMGNlYzJmYTkyZmE0NSIsIm5hbWUiOiJ0ZXN0X3VzZXJfMSIsImlhdCI6MTY4NDkwMTc2OH0.1x7gwqgKhMT2U_EJz261L4u2N8t71VRBfPcix_PO10c\",\n    \"userId\": \"646d8f5f1710cec2fa92fa45\"\n}"
+				},
+				{
+					"name": "로그인 실패",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"tests@mail.com\",\n    \"password\":\"test\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "X-Requested-With"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "41"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"29-Gq7Pkbo7DeYFudwUjkOXYp7IP6E\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 24 May 2023 04:16:38 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"errors\": [\n        {\n            \"message\": \"Not found user\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "auth/token_state",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmQ4ZjVmMTcxMGNlYzJmYTkyZmE0NSIsIm5hbWUiOiJ0ZXN0X3VzZXJfMSIsImlhdCI6MTY4NDkwMTgyM30.nwmmZRlprv63z1V1G_n7QwDZWH5bdafVhkVGakLueJo\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/auth/token_state",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"auth",
+						"token_state"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "토큰 상태 정상",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmQ4ZjVmMTcxMGNlYzJmYTkyZmE0NSIsIm5hbWUiOiJ0ZXN0X3VzZXJfMSIsImlhdCI6MTY4NDkwMTgyM30.nwmmZRlprv63z1V1G_n7QwDZWH5bdafVhkVGakLueJo\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/token_state",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"token_state"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "X-Requested-With"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "60"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"3c-Cv96AjsIJ8dXoloLARKHFWxXhNQ\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 24 May 2023 04:18:43 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"email\": \"test@mail.com\",\n    \"name\": \"test_user_1\",\n    \"isAuth\": true\n}"
+				},
+				{
+					"name": "토큰 상태 비정상",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmQ4ZjVmMTcxMGNlYzJmYTkyZmE0NSIsIm5hbWUiOiJ0ZXN0X3VzZXJfMSIsImlhdCI6MTY4NDkwMTgyM30.nwmmZRlprv63z1V1G_n7QwDZWH5bdafVhkVGakLueJos\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/token_state",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"token_state"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "X-Requested-With"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "37"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"25-/oVDiFA4/pTdBEkDfQNvDH4DV58\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 24 May 2023 04:19:21 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"errors\": [\n        {\n            \"message\": \"Not Found.\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "토큰 상태 확인",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/auth/token_state?token=eyJhbGciOiJIUzI1NiJ9.NjQyZDljN2Y1MTMxN2M0MWY0YTRkZGVi.Dhfa-tW6iCDLLkoCNGi56nJat2fLL42wpm5mUatwO38",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"auth",
+						"token_state"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.NjQyZDljN2Y1MTMxN2M0MWY0YTRkZGVi.Dhfa-tW6iCDLLkoCNGi56nJat2fLL42wpm5mUatwO38"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "토큰 상태 정상",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiJ9.NjQ2NjA3ZmU2MDExYTY3NDNkNDdmZDE4.91PxiEASQnPreE5675fP0_XgJDiPr272epMoHkdjebE",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/token_state?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmQ4ZjVmMTcxMGNlYzJmYTkyZmE0NSIsIm5hbWUiOiJ0ZXN0X3VzZXJfMSIsImlhdCI6MTY4NDkwMTgyM30.nwmmZRlprv63z1V1G_n7QwDZWH5bdafVhkVGakLueJo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"token_state"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmQ4ZjVmMTcxMGNlYzJmYTkyZmE0NSIsIm5hbWUiOiJ0ZXN0X3VzZXJfMSIsImlhdCI6MTY4NDkwMTgyM30.nwmmZRlprv63z1V1G_n7QwDZWH5bdafVhkVGakLueJo"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "X-Requested-With"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "60"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"3c-Cv96AjsIJ8dXoloLARKHFWxXhNQ\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 24 May 2023 04:17:23 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"email\": \"test@mail.com\",\n    \"name\": \"test_user_1\",\n    \"isAuth\": true\n}"
+				},
+				{
+					"name": "토큰 상태 비정상",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiJ9.NjQ2NjA3ZmU2MDExYTY3NDNkNDdmZDE4.91PxiEASQnPreE5675fP0_XgJDiPr272epMoHkdjebE",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/token_state?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NjYwN2ZlNjAxMWE2NzQzZDQ3ZmQxOCIsIm5hbWUiOiJ0ZXN0cyIsImlhdCI6MTY4NDc1NDc2NH0.vJPW4iPu4bRsmGFRDnOxC0HIImSf42nlFYwsFz8GpNw",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"token_state"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NjYwN2ZlNjAxMWE2NzQzZDQ3ZmQxOCIsIm5hbWUiOiJ0ZXN0cyIsImlhdCI6MTY4NDc1NDc2NH0.vJPW4iPu4bRsmGFRDnOxC0HIImSf42nlFYwsFz8GpNw"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "X-Requested-With"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "37"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"25-/oVDiFA4/pTdBEkDfQNvDH4DV58\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 24 May 2023 04:17:39 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"errors\": [\n        {\n            \"message\": \"Not Found.\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "회원 정보 수정",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmM3MjI4Mzk0MmZkMGI5NmU4OGZmOCIsIm5hbWUiOiJ0ZXN0X3VzZXJfMSIsImlhdCI6MTY4NDgzODAwNn0.cqJmXv8EaF8ZsIEtBPNvzPXdmonGghm79omwFIchiNA\",\n    \"info\":{\n        \"country\":\"KR\",\n        \"language\":\"KO\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/auth/changing_information",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"auth",
+						"changing_information"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "회원 정보 수정에 오류가 없음",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmQ4ZjVmMTcxMGNlYzJmYTkyZmE0NSIsIm5hbWUiOiJ0ZXN0X3VzZXJfMSIsImlhdCI6MTY4NDkwMTgyM30.nwmmZRlprv63z1V1G_n7QwDZWH5bdafVhkVGakLueJo\",\n    \"info\":{\n        \"name\":\"test\",\n        \"country\":\"KR\",\n        \"language\":\"KO\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/changing_information",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"changing_information"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "X-Requested-With"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "16"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"10-oV4hJxRVSENxc/wX8+mA4/Pe4tA\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 24 May 2023 04:20:36 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true\n}"
+				},
+				{
+					"name": "유저를 찾을 수 없음",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmQ4ZjVmMTcxMGNlYzJmYTkyZmE0NSIsIm5hbWUiOiJ0ZXN0X3VzZXJfMSIsImlhdCI6MTY4NDkwMTgyM30.nwmmZRlprv63z1V1G_n7QwDZWH5bdafVhkVGakLueJos\",\n    \"info\":{\n        \"name\":\"test\",\n        \"country\":\"KR\",\n        \"language\":\"KO\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/changing_information",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"changing_information"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "X-Requested-With"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "37"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"25-/oVDiFA4/pTdBEkDfQNvDH4DV58\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 24 May 2023 04:20:58 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"errors\": [\n        {\n            \"message\": \"Not Found.\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "회원 정보 비밀번호 수정",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmM3MjI4Mzk0MmZkMGI5NmU4OGZmOCIsIm5hbWUiOiJ0ZXN0X3VzZXJfMSIsImlhdCI6MTY4NDgzODAwNn0.cqJmXv8EaF8ZsIEtBPNvzPXdmonGghm79omwFIchiNA\",\n    \"info\":{\n        \"password\":\"test\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/auth/changing_password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"auth",
+						"changing_password"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "회원 정보 비밀번호 수정 성공",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmQ4ZjVmMTcxMGNlYzJmYTkyZmE0NSIsIm5hbWUiOiJ0ZXN0X3VzZXJfMSIsImlhdCI6MTY4NDkwMTgyM30.nwmmZRlprv63z1V1G_n7QwDZWH5bdafVhkVGakLueJo\",\n    \"info\":{\n        \"password\":\"test\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/changing_password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"changing_password"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "X-Requested-With"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "16"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"10-oV4hJxRVSENxc/wX8+mA4/Pe4tA\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 24 May 2023 04:21:20 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true\n}"
+				},
+				{
+					"name": "유저를 찾을 수 없음",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmQ4ZjVmMTcxMGNlYzJmYTkyZmE0NSIsIm5hbWUiOiJ0ZXN0X3VzZXJfMSIsImlhdCI6MTY4NDkwMTgyM30.nwmmZRlprv63z1V1G_n7QwDZWH5bdafVhkVGakLueJos\",\n    \"info\":{\n        \"password\":\"test\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/changing_password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"changing_password"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "X-Requested-With"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "37"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"25-/oVDiFA4/pTdBEkDfQNvDH4DV58\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 24 May 2023 04:21:31 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"errors\": [\n        {\n            \"message\": \"Not Found.\"\n        }\n    ]\n}"
+				}
+			]
+		}
+	]
+}
